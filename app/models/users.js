@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const ContainerMongoose = require("../persistance.js/users");
+const ContainerMongoose = require("../persistance/mongo");
 const collection = "users";
 
 const userSchema = new mongoose.Schema(

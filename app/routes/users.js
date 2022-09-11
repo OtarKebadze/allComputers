@@ -1,5 +1,5 @@
 const express = require("express");
-const router = express.Router();
+const routerUsers = express.Router();
 const {
     getAllUsers,
     getOneUser,
@@ -8,16 +8,16 @@ const {
     deleteUser
 } = require('../controllers/users')
 
-router.get('/',getAllUsers)
+routerUsers.get('/',getAllUsers)
 
-router.get('/:id',getOneUser)
+routerUsers.get('/:id',getOneUser)
 
-router.post('/',createUser)
+routerUsers.post('/',createUser)
 
-router.patch('/:id',updateUser)
+routerUsers.put('/:id',updateUser)
 
-router.delete('/:id',deleteUser)
+routerUsers.delete('/:id',deleteUser)
 
 //TODO: no olvidar hacer deleteAll
 
-module.exports = router;
+module.exports = routerUsers;

@@ -7,7 +7,7 @@ const getAllUsers = async (req, res) => {
     const listAll = await containerUsers.getAll()
     res.send({ data: listAll });
   } catch (error) {
-    httpError(res, err);
+    httpError(res, error);
   }
 };
 
@@ -29,9 +29,10 @@ const createUser = async (req, res) => {
       data: newUser,
     });
   } catch (error) {
-    httpError(res, err);
+    httpError(res, error);
   }
 };
+const updateUser = (req, res) => {};
 
 const deleteUser = (req, res) => {};
 

@@ -8,13 +8,13 @@ class ContainerMongoose {
     await col.save();
   }
   async getById(id) {
-    return await this.schema.find({ _id: id }).lean();
+    return await this.schema.find({ id: id }).lean();
   }
   async getAll() {
     return await this.schema.find({}).lean();
   }
   async deleteById(id) {
-    await this.schema.deleteOne({ _id: id });
+    await this.schema.deleteOne({ id: id });
   }
   async deleteAll() {
     await this.schema.deleteMany({});
