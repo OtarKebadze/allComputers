@@ -8,6 +8,7 @@ const getAllProducts = async (req, res) => {
       (await containerProduct.getAll()) === []
         ? ""
         : await containerProduct.getAll();
+      console.log(allProds)
     res.render("products", { allProds });
   } catch (error) {
     httpError(res, error);

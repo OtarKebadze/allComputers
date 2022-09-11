@@ -10,14 +10,13 @@ const {
 
 routerUsers.get('/',getAllUsers)
 
-routerUsers.get('/:id',getOneUser)
+routerUsers.get('/:id_user',getOneUser)
 
 routerUsers.post('/',createUser)
 
-routerUsers.put('/:id',updateUser)
+routerUsers.put('/:id_user',updateUser)
 
-routerUsers.delete('/:id',deleteUser)
+routerUsers.delete('/:id_user?',deleteUser)
 
-//TODO: no olvidar hacer deleteAll
 
 module.exports = routerUsers;
