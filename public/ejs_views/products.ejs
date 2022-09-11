@@ -23,9 +23,10 @@
             </form>
         </div>
     <h1>OUR PRODUCTS</h1>
-    <% if (allProds != "") { %>
+    <% if (allProducts !== "") { %>
         <table class="productView">
             <thead>
+                <th id="title"> ID </th>
                 <th>TITLE</th>
                 <th id="title price">PRICE</th>
                 <th id="title ">IMAGE</th>
@@ -33,8 +34,9 @@
                 <th id="title">CATEGORY</th>
             </thead>
             <tbody>
-                <% allProds.forEach((prod)=> { %>
+                <% allProducts.forEach((prod)=> { %>
                 <tr>
+                    <td><%= prod.id %></td>
                     <td><%= prod.title %></td>
                     <td class="price">$ <%= prod.price %></td>
                     <td><img style="width: 150px; height:100px" src=<%= prod.thumbnail %>></td>
@@ -45,7 +47,7 @@
                 <% }) %>
             </tbody>
     </table>
-    <%}else if (allProds == ""){%>
+    <%}else if (allProducts == ""){%>
             <table class="productView">
                 <thead>
                     <th id="title">TITLE</th>

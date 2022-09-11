@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
 const { DB_URI: url } = process.env;
-const options = {
+const mongooseOptions = {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 };
 
 const dbConnect = () => {
-    mongoose.connect(url, options, (error, res) => {
+    mongoose.connect(url, mongooseOptions, (error, res) => {
         if (!error) {
             console.log(`
       °°°°°°°°°°°°°°°°°°
@@ -26,4 +26,4 @@ const dbConnect = () => {
         }
     });
 };
-module.exports = { dbConnect };
+module.exports = { dbConnect , mongooseOptions};

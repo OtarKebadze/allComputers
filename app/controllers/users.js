@@ -1,11 +1,17 @@
 const { httpError } = require("../helpers/handleError");
-const { containerUsers } = require("../main");
-const { v4: uuid } = require("uuid");
+
+
+const {
+    createAndSaveNewUSerInDb,
+    getAllUsersFromDb,
+    getOneUserFromDb,
+    deleteOnUserFromDB,
+} = require("../services/users");
 
 const getAllUsers = async (req, res) => {
     try {
-        const listAll = await containerUsers.getAll();
-        res.send(listAll);
+        const result = await getAllUsersFromDb();
+        res.send(result);
     } catch (error) {
         httpError(res, error);
     }
@@ -14,30 +20,17 @@ const getAllUsers = async (req, res) => {
 const getOneUser = async (req, res) => {
     try {
         let id = req.params.id_user;
-        const userFound = await containerUsers.getById(id);
-        res.send(userFound);
+        let result = await getOneUserFromDb(id);
+        res.send(result);
     } catch (error) {
         httpError(res, error);
     }
 };
 
-const createUser = async (req, res) => {
+const saveNewUser = async (req, res) => {
     try {
-        const { username, email, password, address, age, phone } = req.body;
-        const newUser = {
-            id:uuid(),
-            username,
-            email,
-            password,
-            address,
-            age,
-            phone,
-        };
-        await containerUsers.save(newUser);
-        console.log(`Added succesfully ${newUser.username} with id: ${newUser.id}`);
-        res.send({
-            data: newUser,
-        });
+        let data = req.body;
+        let newUser = await createAndSaveNewUSerInDb(data);
     } catch (error) {
         httpError(res, error);
     }
@@ -45,21 +38,18 @@ const createUser = async (req, res) => {
 
 const updateUser = (req, res) => {};
 
-const deleteUser = async (req, res) => {
+const deleteOneUser = async (req, res) => {
     try {
         let id = req.params.id_user;
-        id === undefined ? false : id;
-        if (!id) {
-            await containerUsers.deleteAll();
-            res.status(200).send(`Succesfully Deleted All
-    <a href="http://localhost:8080/users">GO TO MAIN PAGE</a>
-    `);
-        } else {
-            await containerUsers.deleteById(id);
-            res.status(200).send(`Succesfully One User
-  <a href="http://localhost:8080/users">GO TO MAIN PAGE</a>
-  `);
-        }
+        const result = await deleteOnUserFromDB(id);
+        res.send(result)
+    } catch (error) {
+        httpError(res, error);
+    }
+};
+
+const deleteAllUsers = async (req, res) => {
+    try {
     } catch (error) {
         httpError(res, error);
     }
@@ -68,7 +58,8 @@ const deleteUser = async (req, res) => {
 module.exports = {
     getAllUsers,
     getOneUser,
-    createUser,
+    saveNewUser,
     updateUser,
-    deleteUser,
+    deleteOneUser,
+    deleteAllUsers,
 };

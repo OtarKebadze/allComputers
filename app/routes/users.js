@@ -3,20 +3,22 @@ const routerUsers = express.Router();
 const {
     getAllUsers,
     getOneUser,
-    createUser,
+    saveNewUser,
     updateUser,
-    deleteUser
+    deleteOneUser,
+    deleteAllUsers
 } = require('../controllers/users')
 
 routerUsers.get('/',getAllUsers)
 
 routerUsers.get('/:id_user',getOneUser)
 
-routerUsers.post('/',createUser)
+routerUsers.post('/',saveNewUser)
 
 routerUsers.put('/:id_user',updateUser)
 
-routerUsers.delete('/:id_user?',deleteUser)
+routerUsers.delete('/:id_user',deleteOneUser)
 
+routerUsers.delete('/deleteAll',deleteAllUsers)
 
 module.exports = routerUsers;
