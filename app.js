@@ -1,26 +1,20 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
+const passport = require("./app/middlewares/passport");
 const bodyParser = require("body-parser");
+const MongoStore = require("connect-mongo");
 const coockieParser = require("cookie-parser");
 const session = require("express-session");
-const MongoStore = require("connect-mongo");
-const passport = require("./app/middlewares/passport");
 const cors = require("cors");
 
-const { 
-  PORT, 
-  DB_URI: dburl, 
-  COOKIE_SECRET: secret 
-} = process.env;
+const { PORT, DB_URI: dburl, COOKIE_SECRET: secret } = process.env;
 
-const { 
-  dbConnect, 
-  mongooseOptions 
-} = require("./config/mongo");
+const { dbConnect, mongooseOptions } = require("./config/mongo");
 
 const routerProd = require("./app/routes/products");
 const routerUsers = require("./app/routes/users");
+const routerSession = require("./app/routes/login-register");
 
 // °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°//
 
@@ -28,9 +22,8 @@ const routerUsers = require("./app/routes/users");
 
 // °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°//
 
-app.use(cors());
-app.use(express.json());
 app.use(express.static("public"));
+app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(coockieParser());
 
@@ -41,18 +34,18 @@ app.use(coockieParser());
 // °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°//
 
 app.use(
-  session({
-      store: MongoStore.create({
-          mongoUrl: dburl,
-          mongoOptions: mongooseOptions,
-      }),
-      secret: secret,
-      resave: true,
-      saveUninitialized: true,
-      cookie: {
-          maxAge: 90000,
-      },
-  })
+    session({
+        store: MongoStore.create({
+            mongoUrl: dburl,
+            mongoOptions: mongooseOptions,
+        }),
+        secret: secret,
+        resave: true,
+        saveUninitialized: true,
+        cookie: {
+            maxAge: 90000,
+        },
+    })
 );
 
 app.use(passport.initialize());
@@ -66,7 +59,7 @@ app.use(passport.session());
 
 app.use("/products", routerProd);
 app.use("/users", routerUsers);
-
+app.use("/session", routerSession);
 
 // °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°//
 
@@ -76,7 +69,6 @@ app.use("/users", routerUsers);
 
 app.set("views", "./public/ejs_views/");
 app.set("view engine", "ejs");
-
 
 // °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°//
 

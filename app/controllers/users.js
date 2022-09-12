@@ -63,63 +63,10 @@ const deleteAllUsers = async (req, res) => {
     }
 };
 
-const registerNewUser = (req, res) => {
-    try {
-        
-    } catch (error) {
-        httpError(res,error)
-    }
-};
-
-const getRegisterPage = (req, res) => {
-    try {
-        
-    } catch (error) {
-        httpError(res,error)
-    }
-};
-
-const loginUser = (req, res) => {
-    try {
-        
-    } catch (error) {
-        httpError(res,error)
-    }
-};
-
-const getLoginPage = (req, res) => {
-    try {
-        
-    } catch (error) {
-        httpError(res,error)
-    }
-};
-
-const getFailRegisterPage = (req, res) => {
-    try {
-        
-    } catch (error) {
-        httpError(res,error)
-    }
-};
-
-const getFailLoginPage = (req, res) => {
-    try {
-        
-    } catch (error) {
-        httpError(res,error)
-    }
-};
 module.exports = {
     getAllUsers,
     getOneUser,
     updateUser,
     deleteOneUser,
     deleteAllUsers,
-    registerNewUser,
-    getRegisterPage,
-    loginUser,
-    getLoginPage,
-    getFailRegisterPage,
-    getFailLoginPage
 }  
