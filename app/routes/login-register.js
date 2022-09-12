@@ -8,6 +8,8 @@ const {
     getLoginPage,
     getFailRegisterPage,
     getFailLoginPage,
+    getMainPage,
+    logOut
 } = require("../controllers/login-register");
 
 // °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°//
@@ -38,7 +40,7 @@ routerSession.get("/register_fail", getFailRegisterPage);
 routerSession.post(
     "/login",
     passport.authenticate("autenticate", {
-        failureRedirect: "/session/login",
+        failureRedirect: "/session/login_fail",
         failureMessage: true,
     }),
     loginUser
@@ -46,6 +48,16 @@ routerSession.post(
 
 routerSession.get("/login", getLoginPage);
 
+routerSession.get("/main", getMainPage);
+
 routerSession.get("/login_fail", getFailLoginPage);
+
+// °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°//
+
+//                  LOGOUT                   //
+
+// °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°//
+
+routerSession.post("/logout", logOut);
 
 module.exports = routerSession;
