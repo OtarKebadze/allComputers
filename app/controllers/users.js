@@ -1,12 +1,12 @@
 const { httpError } = require("../helpers/handleError");
 
 
-const {
-    createAndSaveNewUSerInDb,
+const{
     getAllUsersFromDb,
     getOneUserFromDb,
     deleteOnUserFromDB,
-} = require("../services/users");
+    deleteAllUsersFromDB
+}= require("../services/users");
 
 const getAllUsers = async (req, res) => {
     try {
@@ -36,7 +36,13 @@ const saveNewUser = async (req, res) => {
     }
 };
 
-const updateUser = (req, res) => {};
+const updateUser = (req, res) => {
+    try {
+        
+    } catch (error) {
+        httpError(res,error)
+    }
+};
 
 const deleteOneUser = async (req, res) => {
     try {
@@ -50,16 +56,70 @@ const deleteOneUser = async (req, res) => {
 
 const deleteAllUsers = async (req, res) => {
     try {
+    let result = await deleteAllUsersFromDB()
+    res.send(result)
     } catch (error) {
         httpError(res, error);
     }
 };
 
+const registerNewUser = (req, res) => {
+    try {
+        
+    } catch (error) {
+        httpError(res,error)
+    }
+};
+
+const getRegisterPage = (req, res) => {
+    try {
+        
+    } catch (error) {
+        httpError(res,error)
+    }
+};
+
+const loginUser = (req, res) => {
+    try {
+        
+    } catch (error) {
+        httpError(res,error)
+    }
+};
+
+const getLoginPage = (req, res) => {
+    try {
+        
+    } catch (error) {
+        httpError(res,error)
+    }
+};
+
+const getFailRegisterPage = (req, res) => {
+    try {
+        
+    } catch (error) {
+        httpError(res,error)
+    }
+};
+
+const getFailLoginPage = (req, res) => {
+    try {
+        
+    } catch (error) {
+        httpError(res,error)
+    }
+};
 module.exports = {
     getAllUsers,
     getOneUser,
-    saveNewUser,
     updateUser,
     deleteOneUser,
     deleteAllUsers,
-};
+    registerNewUser,
+    getRegisterPage,
+    loginUser,
+    getLoginPage,
+    getFailRegisterPage,
+    getFailLoginPage
+}  

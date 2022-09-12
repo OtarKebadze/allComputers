@@ -1,7 +1,11 @@
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require("bcrypt");
-const { containerUsers } = require("../main");
+const { v4: uuid } = require("uuid");
+const { 
+containerUsers 
+} = require("../main");
+
 
 
 passport.use(
@@ -12,30 +16,32 @@ passport.use(
       const users = await containerUsers.getAll();
       const userFound = users.find((us) => us.username == username);
       if (userFound){
-      return done(err, false, { message: "USERNAME ALREADY IN USE" });
+      return done(null);
       }
       const passHashed = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
       const newUser = {
-        username:username,
+        id:uuid(),
+        username,
         email:req.body.email,
         password: passHashed,
         address: req.body.address,
         age: req.body.age,
-        tel: req.body.tel,
-        img: req.body.img,
+        phone: req.body.phone,
+        //img: req.body.img,
       };
       await containerUsers.save(newUser);
       return done(null, newUser);
     }
   )
 );
+
 passport.use(
   "autenticate",
   new LocalStrategy(async (username, password, done) => {
     const users = await containerUsers.getAll();
     const userFound = users.find((us) => us.username == username);
     if (!userFound || !bcrypt.compareSync(password, userFound.password)) {
-      return done(null, false, { message: "NOT FOUND" });
+      return done(null);
     }else{
     return done(null, userFound);
     }

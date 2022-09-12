@@ -1,4 +1,3 @@
-const { v4: uuid } = require("uuid");
 const { containerUsers } = require("../main");
 
 const getAllUsersFromDb = async () => {
@@ -15,20 +14,11 @@ const getOneUserFromDb = async (id) => {
     return userFoundInDb;
 };
 
-const createAndSaveNewUSerInDb = async (data) => {
-    const { username, email, password, address, age, phone } = data;
-    const newUser = {
-        id: uuid(),
-        username,
-        email,
-        password,
-        address,
-        age,
-        phone,
-    };
-    await containerUsers.save(newUser);
-    console.log(`Added succesfully ${newUser.username} with id: ${newUser.id}`);
-    return newUser;
+const SaveNewUSerInDb = async (user) => {
+    await containerUsers.save(user);
+    console.log(user)
+    console.log(`Added succesfully ${user.username} with id: ${user.id}`);
+    return user;
 };
 
 const deleteOnUserFromDB = async (id) => {
@@ -43,9 +33,18 @@ const deleteOnUserFromDB = async (id) => {
     `);
 };
 
+const deleteAllUsersFromDB = async ()=>{
+    const listAll = await containerUsers.getAll();
+    if (listAll.length === 0) {
+        return {error :" NOT USERS IN SYSTEM "}
+    }
+    await containerUsers.deleteAll()
+    return 'DELETED ALL USERS FROM SYSTEM'
+}
 module.exports = {
-    createAndSaveNewUSerInDb,
+    SaveNewUSerInDb,
     getAllUsersFromDb,
     getOneUserFromDb,
     deleteOnUserFromDB,
+    deleteAllUsersFromDB
 };

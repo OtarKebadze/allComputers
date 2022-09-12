@@ -1,28 +1,26 @@
 require("dotenv").config();
 const express = require("express");
-const cors = require("cors");
 const app = express();
 const bodyParser = require("body-parser");
 const coockieParser = require("cookie-parser");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const passport = require("./app/middlewares/passport");
+const cors = require("cors");
 
 const { 
-PORT,
-DB_URI: dburl,
-COOKIE_SECRET: secret 
+  PORT, 
+  DB_URI: dburl, 
+  COOKIE_SECRET: secret 
 } = process.env;
 
 const { 
-  dbConnect,
-  mongooseOptions
+  dbConnect, 
+  mongooseOptions 
 } = require("./config/mongo");
 
 const routerProd = require("./app/routes/products");
 const routerUsers = require("./app/routes/users");
-const routerLogin = require("./app/routes/login");
-const routerRegister = require("./app/routes/register");
 
 // °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°//
 
@@ -38,14 +36,37 @@ app.use(coockieParser());
 
 // °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°//
 
+//                SESSION                    //
+
+// °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°//
+
+app.use(
+  session({
+      store: MongoStore.create({
+          mongoUrl: dburl,
+          mongoOptions: mongooseOptions,
+      }),
+      secret: secret,
+      resave: true,
+      saveUninitialized: true,
+      cookie: {
+          maxAge: 90000,
+      },
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+// °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°//
+
 //                ENDPOINTS                  //
 
 // °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°//
 
 app.use("/products", routerProd);
 app.use("/users", routerUsers);
-app.use("/login", routerLogin);
-app.use("/register", routerRegister);
+
 
 // °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°//
 
@@ -56,28 +77,6 @@ app.use("/register", routerRegister);
 app.set("views", "./public/ejs_views/");
 app.set("view engine", "ejs");
 
-// °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°//
-
-//                SESSION                    //
-
-// °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°//
-
-app.use(
-    session({
-        store: MongoStore.create({
-            mongoUrl: dburl,
-            mongoOptions: mongooseOptions,
-        }),
-        secret: secret,
-        resave: true,
-        saveUninitialized: true,
-        cookie: {
-            maxAge: 90000,
-        },
-    })
-);
-app.use(passport.initialize());
-app.use(passport.session());
 
 // °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°//
 
