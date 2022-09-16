@@ -1,72 +1,67 @@
 const { httpError } = require("../helpers/handleError");
 
+const { ServiceUsers } = require("../services/users");
 
-const{
-    getAllUsersFromDb,
-    getOneUserFromDb,
-    deleteOnUserFromDB,
-    deleteAllUsersFromDB
-}= require("../services/users");
-
-const getAllUsers = async (req, res) => {
-    try {
-        const result = await getAllUsersFromDb();
-        res.send(result);
-    } catch (error) {
-        httpError(res, error);
+class ProductController {
+    constructor() {
+        this.service = new ServiceUsers();
     }
-};
 
-const getOneUser = async (req, res) => {
-    try {
-        let id = req.params.id_user;
-        let result = await getOneUserFromDb(id);
-        res.send(result);
-    } catch (error) {
-        httpError(res, error);
-    }
-};
+    getAllUsers = async (req, res) => {
+        try {
+            const result = await this.service.getAllUsersFromDb();
+            res.send(result);
+        } catch (error) {
+            httpError(res, error);
+        }
+    };
 
-const saveNewUser = async (req, res) => {
-    try {
-        let data = req.body;
-        let newUser = await createAndSaveNewUSerInDb(data);
-    } catch (error) {
-        httpError(res, error);
-    }
-};
+    getOneUser = async (req, res) => {
+        try {
+            let id = req.params.id_user;
+            let result = await this.service.getOneUserFromDb(id);
+            res.send(result);
+        } catch (error) {
+            httpError(res, error);
+        }
+    };
 
-const updateUser = (req, res) => {
-    try {
-        
-    } catch (error) {
-        httpError(res,error)
-    }
-};
+    saveNewUser = async (req, res) => {
+        try {
+            let data = req.body;
+            await this.service.createAndSaveNewUSerInDb(data);
+        } catch (error) {
+            httpError(res, error);
+        }
+    };
 
-const deleteOneUser = async (req, res) => {
-    try {
-        let id = req.params.id_user;
-        const result = await deleteOnUserFromDB(id);
-        res.send(result)
-    } catch (error) {
-        httpError(res, error);
-    }
-};
+    updateUser = (req, res) => {
+        try {
+        } catch (error) {
+            httpError(res, error);
+        }
+    };
 
-const deleteAllUsers = async (req, res) => {
-    try {
-    let result = await deleteAllUsersFromDB()
-    res.send(result)
-    } catch (error) {
-        httpError(res, error);
-    }
-};
+    deleteOneUser = async (req, res) => {
+        try {
+            let id = req.params.id_user;
+            const result = await this.service.deleteOnUserFromDB(id);
+            res.send(result);
+        } catch (error) {
+            httpError(res, error);
+        }
+    };
+
+    deleteAllUsers = async (req, res) => {
+        try {
+            let result = await this.service.deleteAllUsersFromDB();
+            res.send(result);
+        } catch (error) {
+            httpError(res, error);
+        }
+    };
+}
 
 module.exports = {
-    getAllUsers,
-    getOneUser,
-    updateUser,
-    deleteOneUser,
-    deleteAllUsers,
-}  
+    ProductController,
+};

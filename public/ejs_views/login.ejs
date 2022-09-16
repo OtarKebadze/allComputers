@@ -18,7 +18,7 @@
                         autocomplete="off"
                     />
                     <input
-                        type="text"
+                        type="password"
                         name="password"
                         placeholder="INSERT PASSWORD"
                         autocomplete="off"
@@ -33,13 +33,20 @@
                         />
                     </p>
                 </form>
+                <% if (port) { %>
                 <p class="btn">
                     IF YOU ARE NEW:
-                    <a href="http://localhost:8080/session/register" class="button"
-                        >CLICK HERE</a
-                    >
+                    <a href="http://localhost:<%= port %>/session/register" class="button"
+                        >CLICK HERE</a>
                 </p>
-            </div>
+                <% } else { %>
+                    <p class="btn">
+                        IF YOU ARE NEW:
+                        <a href="http://localhost:8080/session/register" class="button"
+                            >CLICK HERE</a>%>
+                    </p>
+                <% } %>
+                </div>
         </div>
     </body>
 </html>

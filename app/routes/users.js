@@ -1,28 +1,30 @@
-const express = require("express");
-const routerUsers = express.Router();
+const { Router } = require("express");
+
 const {
-    getAllUsers,
-    getOneUser,
-    updateUser,
-    deleteOneUser,
-    deleteAllUsers,
-} = require('../controllers/users')
+    ProductController,
+} = require("../controllers/users");
 
-// °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°//
+class RouterUsers {
+    constructor() {
+        this.controller = new ProductController();
+    }
+    config() {
+        const routerUsers = Router();
 
-//                  USERS                    //
+        routerUsers.get("/", this.controller.getAllUsers);
 
-// °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°//
+        routerUsers.get("/:id_user", this.controller.getOneUser);
 
-routerUsers.get('/',getAllUsers)
+        routerUsers.put("/:id_user", this.controller.updateUser);
 
-routerUsers.get('/:id_user',getOneUser)
+        routerUsers.delete("/:id_user", this.controller.deleteOneUser);
 
-routerUsers.put('/:id_user',updateUser)
+        routerUsers.delete("/deleteAll/delete", this.controller.deleteAllUsers);
 
-routerUsers.delete('/:id_user',deleteOneUser)
+        return routerUsers;
+    }
+}
 
-routerUsers.delete('/deleteAll/delete',deleteAllUsers)
-
-
-module.exports = routerUsers;
+module.exports = {
+    RouterUsers,
+};

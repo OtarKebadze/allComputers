@@ -1,7 +1,9 @@
 const path = require("path");
+
 require("dotenv").config({
     path: path.resolve(__dirname, process.env.NODE_ENV + ".env"),
 });
+
 const express = require("express");
 const app = express();
 const passport = require("./app/middlewares/passport");
@@ -15,10 +17,13 @@ const { DB_URI: dburl, COOKIE_SECRET: secret } = process.env;
 
 const { dbConnect, mongooseOptions } = require("./config/mongo");
 
-const routerUsers = require("./app/routes/users");
-const routerSession = require("./app/routes/login-register");
+
+const { RouterSession } = require("./app/routes/session");
 const { RouterProducts } = require("./app/routes/products");
+const { RouterUsers } = require("./app/routes/users");
 const routerProducts = new RouterProducts();
+const routerUsers = new RouterUsers();
+const routerSession = new RouterSession();
 
 // °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°//
 
@@ -62,8 +67,8 @@ app.use(passport.session());
 // °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°//
 
 app.use("/products", routerProducts.config());
-app.use("/users", routerUsers);
-app.use("/session", routerSession);
+app.use("/users", routerUsers.config());
+app.use("/session", routerSession.config());
 
 // °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°//
 

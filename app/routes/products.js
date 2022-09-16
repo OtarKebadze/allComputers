@@ -14,17 +14,15 @@ class RouterProducts {
         
         routerProd.get("/", this.controller.getAllProducts);
 
-        // routerProd.get("/test", this.controller.test);
+        routerProd.get("/:id_prod", this.controller.getOneProduct);
 
-        // routerProd.get("/:id_prod", this.controller.getOneProduct);
+        routerProd.post("/", this.controller.saveProductInDatabase);
 
-        // routerProd.post("/", this.controller.saveProductInDatabase);
+        routerProd.put("/:id_prod", this.controller.updateProduct);
 
-        // routerProd.put("/:id_prod", this.controller.updateProduct);
+        routerProd.delete("/:id_prod", this.controller.deleteOneProduct);
 
-        // routerProd.delete("/:id_prod", this.controller.deleteOneProduct);
-
-        // routerProd.delete("/deleteAll", this.controller.deleteAllProducts);
+        routerProd.delete("/deleteAll", this.controller.deleteAllProducts);
 
         return routerProd;
     }

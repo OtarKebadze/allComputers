@@ -1,50 +1,52 @@
-const { containerUsers } = require("../main");
+const { DaoUserMongoose } = require("../daos/daoUserMongoose");
 
-const getAllUsersFromDb = async () => {
-    const listAll = await containerUsers.getAll();
-    return listAll;
-};
-
-const getOneUserFromDb = async (id) => {
-    const userFoundInDb = await containerUsers.getById(id);
-    if (!userFoundInDb || userFoundInDb.length === 0 ) {
-        console.error("UNEXISTENT USER ID");
-        return { error: "UNEXISTENT USER ID" };
+class ServiceUsers {
+    constructor() {
+        this.dao = new DaoUserMongoose();
     }
-    return userFoundInDb;
-};
+    getAllUsersFromDb = async () => {
+        const listAll = await this.dao.getAll();
+        return listAll;
+    };
 
-const SaveNewUSerInDb = async (user) => {
-    await containerUsers.save(user);
-    console.log(user)
-    console.log(`Added succesfully ${user.username} with id: ${user.id}`);
-    return user;
-};
+    getOneUserFromDb = async (id) => {
+        const userFoundInDb = await this.dao.getById(id);
+        if (!userFoundInDb || userFoundInDb.length === 0) {
+            console.error("UNEXISTENT USER ID");
+            return { error: "UNEXISTENT USER ID" };
+        }
+        return userFoundInDb;
+    };
 
-const deleteOnUserFromDB = async (id) => {
-    let userFoundInDb = await containerUsers.getById(id);
-    if (!userFoundInDb || userFoundInDb.length === 0) {
-        console.error("UNEXISTENT USER ID");
-        return { error: "UNEXISTENT USER ID" };
-    }
-    await containerUsers.deleteById(id);
-    return (`Succesfully One User
-    <a href="http://localhost:8080/users">GO TO MAIN PAGE</a>
-    `);
-};
+    SaveNewUSerInDb = async (user) => {
+        await this.dao.save(user);
+        console.log(user);
+        console.log(`Added succesfully ${user.username} with id: ${user.id}`);
+        return user;
+    };
 
-const deleteAllUsersFromDB = async ()=>{
-    const listAll = await containerUsers.getAll();
-    if (listAll.length === 0) {
-        return {error :" NOT USERS IN SYSTEM "}
-    }
-    await containerUsers.deleteAll()
-    return 'DELETED ALL USERS FROM SYSTEM'
+    deleteOnUserFromDB = async (id) => {
+        let userFoundInDb = await this.dao.getById(id);
+        if (!userFoundInDb || userFoundInDb.length === 0) {
+            console.error("UNEXISTENT USER ID");
+            return { error: "UNEXISTENT USER ID" };
+        }
+        await this.dao.deleteById(id);
+        return `Succesfully One User
+    <a href="http://localhost:${PORT}/users">GO TO MAIN PAGE</a>
+    `;
+    };
+
+    deleteAllUsersFromDB = async () => {
+        const listAll = await this.dao.getAll();
+        if (listAll.length === 0) {
+            return { error: " NOT USERS IN SYSTEM " };
+        }
+        await this.dao.deleteAll();
+        return "DELETED ALL USERS FROM SYSTEM";
+    };
 }
+
 module.exports = {
-    SaveNewUSerInDb,
-    getAllUsersFromDb,
-    getOneUserFromDb,
-    deleteOnUserFromDB,
-    deleteAllUsersFromDB
+    ServiceUsers,
 };
