@@ -1,4 +1,7 @@
-require("dotenv").config();
+const path = require("path");
+require("dotenv").config({
+    path: path.resolve(__dirname, process.env.NODE_ENV + ".env"),
+});
 const express = require("express");
 const app = express();
 const passport = require("./app/middlewares/passport");
@@ -7,14 +10,15 @@ const MongoStore = require("connect-mongo");
 const coockieParser = require("cookie-parser");
 const session = require("express-session");
 const cors = require("cors");
-
-const { PORT, DB_URI: dburl, COOKIE_SECRET: secret } = process.env;
+const { PORT } = require("./config/index");
+const { DB_URI: dburl, COOKIE_SECRET: secret } = process.env;
 
 const { dbConnect, mongooseOptions } = require("./config/mongo");
 
-const routerProd = require("./app/routes/products");
 const routerUsers = require("./app/routes/users");
 const routerSession = require("./app/routes/login-register");
+const { RouterProducts } = require("./app/routes/products");
+const routerProducts = new RouterProducts();
 
 // °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°//
 
@@ -57,7 +61,7 @@ app.use(passport.session());
 
 // °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°//
 
-app.use("/products", routerProd);
+app.use("/products", routerProducts.config());
 app.use("/users", routerUsers);
 app.use("/session", routerSession);
 
@@ -77,7 +81,7 @@ app.set("view engine", "ejs");
 // °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°//
 
 dbConnect();
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
     console.log(`
   °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
 
@@ -85,4 +89,8 @@ app.listen(PORT, () => {
 
   °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
   `);
+});
+
+server.on("error", (error) => {
+    console.log(`ERROR IN SERVER : ${error.message}`);
 });
