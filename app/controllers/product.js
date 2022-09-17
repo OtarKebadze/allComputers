@@ -1,20 +1,26 @@
 const { PORT } = require("../../config");
+const { DaoCartMongoose } = require("../daos/daoCartMongoose");
 const { httpError } = require("../helpers/handleError");
-const {
-    ServiceProducts
-} = require("../services/products")
 
+const { ServiceProducts } = require("../services/products");
 
 class ControllerProducts {
-    constructor(){
+    constructor() {
         this.service = new ServiceProducts();
+        this.cartDao = new DaoCartMongoose();
     }
 
     getAllProducts = async (req, res) => {
         try {
             let allProducts = await this.service.getAllProductsFromDb();
-            console.log(allProducts);
-            res.render("products", { allProducts });
+            let cart = await this.cartDao.getAll();
+            let cartFound = cart.filter(
+                (user) => user.userCart === req.user.username
+            );
+            let userCart = cartFound[0].userCart;
+            console.log(userCart)
+            //console.log(allProducts);
+            res.render("products", { allProducts, userCart });
         } catch (error) {
             httpError(res, error);
         }
@@ -72,5 +78,5 @@ class ControllerProducts {
 }
 
 module.exports = {
-    ControllerProducts
+    ControllerProducts,
 };

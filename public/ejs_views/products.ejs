@@ -36,13 +36,16 @@
             <tbody>
                 <% allProducts.forEach((prod)=> { %>
                 <tr>
-                    <td><%= prod.id %></td>
+                    <td ><%= prod.id %></td>
                     <td><%= prod.title %></td>
                     <td class="price">$ <%= prod.price %></td>
                     <td><img style="width: 150px; height:100px" src=<%= prod.thumbnail %>></td>
                     <td><%= prod.description %></td>
                     <td><%= prod.category %></td>
-                    <td><button class="button"> ADD TO CART</button></td>
+                    <td>
+                    <form action="/cart/<%= userCart %>/products/<%= prod.id %>" method="POST">
+                    <input class="button" type="submit" id = "<%= prod.id %>" value="ADD TO CART"></td>
+                    </form>
                 </tr>
                 <% }) %>
             </tbody>

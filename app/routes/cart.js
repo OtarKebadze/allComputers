@@ -14,6 +14,7 @@ class RouterCart {
 
         routerCart.delete("/" , this.controller.del)
 
+        routerCart.post("/:cart_user/products/:id_prod" , this.controller.prod)
         //     let cart = await containerCart.getAll();
         //     res.send(cart[0].products);
         //   });

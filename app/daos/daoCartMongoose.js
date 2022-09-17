@@ -25,9 +25,9 @@ class DaoCartMongoose extends MongooseContainer {
         return cart;
     }
 
-    async addProd(id, prod){
-    logger.info (prod)
-    await this.update(id,prod)
+    async addProd(userCart, prod){
+    //logger.info (prod)
+    await this.update(userCart,prod)
     }
 
     async save(obj) {
@@ -46,9 +46,9 @@ class DaoCartMongoose extends MongooseContainer {
     async deleteAll() {
         await this.schema.deleteMany({});
     }
-    async update(id, obj) {
+    async update(userCart, obj) {
         return await this.schema.updateOne(
-            { _id: id },
+            { userCart: userCart },
             { $set: { products: obj } }
         );
     }

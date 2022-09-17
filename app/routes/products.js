@@ -3,6 +3,7 @@ const { Router } = require("express");
 const {
 ControllerProducts
 } = require("../controllers/product");
+const checkAuthenticated = require("../middlewares/auth");
 
 class RouterProducts {
     constructor() {
@@ -12,7 +13,7 @@ class RouterProducts {
     config() {
         const routerProd = Router();
         
-        routerProd.get("/", this.controller.getAllProducts);
+        routerProd.get("/", checkAuthenticated , this.controller.getAllProducts);
 
         routerProd.get("/:id_prod", this.controller.getOneProduct);
 

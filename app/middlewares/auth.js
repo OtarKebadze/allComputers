@@ -3,7 +3,7 @@ const checkAuthenticated = (req,res,next)=>{
         //req.isAuthenticated() will return true if user is logged in
         return next();
     } else{
-    res.redirect("/api/session/login");
+    res.redirect("/session/login");
     }
 }
 
