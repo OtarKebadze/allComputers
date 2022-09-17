@@ -1,8 +1,17 @@
 const { PORT } = require("../../config/index");
+const { DaoCartMongoose } = require("../daos/daoCartMongoose");
+const { httpError } = require("../helpers/handleError");
 
 class ControllerSession {
-    registerNewUser = (req, res) => {
+    constructor() {
+        this.dao = new DaoCartMongoose();
+    }
+
+    registerNewUser = async (req, res) => {
         try {
+            let user = req.body.username;
+            let cart = await this.dao.createCart(user);
+            await this.dao.save(cart);
             res.redirect("/session/login");
         } catch (error) {
             httpError(res, error);
@@ -63,10 +72,16 @@ class ControllerSession {
         });
     };
 
-    getMainPage = (req, res) => {
+    getMainPage = async (req, res) => {
         try {
             let port = PORT;
-            res.render("mainpage", { port });
+            let cart = await this.dao.getAll();
+            let userCart = cart.filter(
+                (cart) => cart.userCart === req.user.username
+            );
+            let user = req.user.username
+            console.log(userCart)
+            res.render("mainpage", { port, userCart, user });
         } catch (error) {
             httpError(res, error);
         }

@@ -21,9 +21,11 @@ const { dbConnect, mongooseOptions } = require("./config/mongo");
 const { RouterSession } = require("./app/routes/session");
 const { RouterProducts } = require("./app/routes/products");
 const { RouterUsers } = require("./app/routes/users");
+const { RouterCart } = require("./app/routes/cart");
 const routerProducts = new RouterProducts();
 const routerUsers = new RouterUsers();
 const routerSession = new RouterSession();
+const routerCart = new RouterCart();
 
 // °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°//
 
@@ -69,6 +71,7 @@ app.use(passport.session());
 app.use("/products", routerProducts.config());
 app.use("/users", routerUsers.config());
 app.use("/session", routerSession.config());
+app.use("/cart", routerCart.config());
 
 // °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°//
 

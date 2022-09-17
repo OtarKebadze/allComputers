@@ -4,6 +4,7 @@ const passport = require("../middlewares/passport");
 const {
     ControllerSession,
 } = require("../controllers/session");
+const checkAuthenticated = require("../middlewares/auth");
 
 class RouterSession {
     constructor() {
@@ -49,7 +50,7 @@ class RouterSession {
 
         routerSession.get("/login", this.controller.getLoginPage);
 
-        routerSession.get("/main", this.controller.getMainPage);
+        routerSession.get("/main", checkAuthenticated , this.controller.getMainPage);
 
         routerSession.get("/login_fail", this.controller.getFailLoginPage);
 
