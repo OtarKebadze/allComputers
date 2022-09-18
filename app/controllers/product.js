@@ -18,8 +18,6 @@ class ControllerProducts {
                 (user) => user.userCart === req.user.username
             );
             let userCart = cartFound[0].userCart;
-            console.log(userCart)
-            //console.log(allProducts);
             res.render("products", { allProducts, userCart });
         } catch (error) {
             httpError(res, error);

@@ -8,18 +8,15 @@ class CartController {
         //this.productDao = new DaoProductMongoose();
     }
 
-    test = (req, res) => {
-        res.send(this.service.test());
-    };
-    get = async (req, res) => {
-        let cart = await this.service.get();
+    getAllCarts = async (req, res) => {
+        let cart = await this.service.getAllCartsFromDb();
         console.log(cart);
     };
 
-    del = async (req, res) => {
-        let cart = await this.service.del();
+    delAllCarts = async (req, res) => {
+        let cart = await this.service.delAllCartsFromDb();
     };
-    prod = async (req, res) => {
+    addProdToUserCart = async (req, res) => {
         let idProd = req.params.id_prod;
         let cartUser = req.params.cart_user;
         await this.service.addProdToCart(idProd,cartUser)

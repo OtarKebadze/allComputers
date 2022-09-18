@@ -80,7 +80,6 @@ class ControllerSession {
                 (cart) => cart.userCart === req.user.username
             );
             let user = req.user.username
-            console.log(userCart)
             res.render("mainpage", { port, userCart, user });
         } catch (error) {
             httpError(res, error);

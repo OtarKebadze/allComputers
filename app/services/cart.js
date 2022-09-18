@@ -8,11 +8,11 @@ class CartService {
         this.cartDao = new DaoCartMongoose();
         this.productDao = new DaoProductMongoose();
     }
-    get =  async () =>{
+    getAllCartsFromDb =  async () =>{
        let cart = await this.cartDao.getAll();
        return cart
     }
-    del =  async () =>{
+    delAllCartsFromDb =  async () =>{
         await this.cartDao.deleteAll();
         
      }
@@ -24,9 +24,11 @@ class CartService {
             await userCartFound[0].products.push(productFound[0])
             await this.cartDao.addProd(cartUser,productFound[0])
         }else{
-            console.log("2")
+        let newUserCart = userCartFound[0].products
+        await newUserCart.push(productFound[0])
+        await this.cartDao.addProd(cartUser,newUserCart)    
+        console.log(newUserCart[0])
         }
-        
      }
 }
 

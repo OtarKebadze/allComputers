@@ -17,26 +17,31 @@
                     <input type="submit" value="LOG OUT" />
                 </form>
             </nav>
-            <div class="cartCard">
-            <% if (userCart[0].products.length !== 0 ) { %>
-             <% userCart[0].products.forEach((prod)=> { %>
-                <section><p><%= prod.title %></p></section>
-                <section class="descriptionCard">
-                    <img style="width: 150px; height:100px" src=<%= prod.thumbnail %>>
-                    <p><%= prod.description %></p>
-                    <section>
-                        <p>$ <%= prod.price %></p>
+            <div class="CartContainer">
+                <% if (userCart[0].products.length !== 0 ) { %> 
+                <%userCart[0].products.forEach((prod)=> { %>
+                <% console.log(prod) %>
+                <div class="cartCard">
+                    <section><p><%= prod.title %></p></section>
+                    <section class="descriptionCard">
+                        <img
+                            style="width: 150px; height: 100px"
+                            src="<%=prod.thumbnail%>"/>
+                        <p><%= prod.description %></p>
                         <section>
-                            <button>-</button>
-                            <p>1</p>
-                            <button>+</button>
+                            <p>$ <%= prod.price %></p>
+                            <section>
+                                <button>-</button>
+                                <p>1</p>
+                                <button>+</button>
+                            </section>
                         </section>
                     </section>
-                </section>
-            <%})%>
+                </div>
+                <%})%>
             </div>
             <% }else{%>
-                <div class="cart">EMPTY , PLEASE START BUYING</div>
+            <div class="cart">EMPTY , PLEASE START BUYING</div>
             <% }%>
         </div>
     </body>

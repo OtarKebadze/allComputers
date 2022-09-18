@@ -1,11 +1,10 @@
 const { v4: uuid } = require("uuid");
-const { DaoProductMongoose } = require("../daos/daosProductMongoose");
-
-
+const { DAO_TYPE: daoType } = require("../../config");
+const { ProductDaoFactory } = require("../factory/daoProductsFactory");
 
 class ServiceProducts {
-    constructor(){
-        this.dao = new DaoProductMongoose();
+    constructor() {
+        this.dao = ProductDaoFactory.create(daoType)
     }
 
     getAllProductsFromDb = async () => {
@@ -15,7 +14,7 @@ class ServiceProducts {
         }
         return products;
     };
-    
+
     getOneProductFromDb = async (id) => {
         let productInDb = await this.dao.getById(id);
         if (productInDb.length === 0 || !productInDb) {
@@ -24,7 +23,7 @@ class ServiceProducts {
         }
         return productInDb;
     };
-    
+
     createNewProduct = async (data) => {
         const { title, thumbnail, price, description, category } = data;
         let newProduct = {
@@ -39,10 +38,9 @@ class ServiceProducts {
         console.log(
             `Added succesfully ${newProduct.title} with id: ${newProduct.id}`
         );
-        console.log(newProduct);
     };
-    
-     deleteOneFromDatabase = async (id) => {
+
+    deleteOneFromDatabase = async (id) => {
         let productInDb = await this.dao.getById(id);
         if (productInDb.length === 0 || !productInDb) {
             console.error("UNEXISTENT PRODUCT ID");
@@ -52,8 +50,8 @@ class ServiceProducts {
         console.log(`Succesfully deleted One Product with id: ${id}
     <a href="http://localhost:${PORT}/products">GO TO MAIN PAGE</a>`);
     };
-    
-     deleteAllProductsFromDatabase = async () => {
+
+    deleteAllProductsFromDatabase = async () => {
         await this.dao.deleteAll();
         console.log(`SUCESSFULLY DELETED ALL PRODUCTS FROM DATABASE
         <a href="http://localhost:${PORT}/products">GO TO MAIN PAGE</a>`);
@@ -61,5 +59,5 @@ class ServiceProducts {
 }
 
 module.exports = {
-    ServiceProducts
+    ServiceProducts,
 };

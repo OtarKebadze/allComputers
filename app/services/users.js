@@ -20,7 +20,6 @@ class ServiceUsers {
 
     SaveNewUSerInDb = async (user) => {
         await this.dao.save(user);
-        console.log(user);
         console.log(`Added succesfully ${user.username} with id: ${user.id}`);
         return user;
     };

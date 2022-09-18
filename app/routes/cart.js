@@ -8,13 +8,11 @@ class RouterCart {
     config() {
         const routerCart = Router();
 
-        routerCart.get("/test", this.controller.test);
+        routerCart.get("/" , this.controller.getAllCarts)
 
-        routerCart.get("/" , this.controller.get)
+        routerCart.delete("/" , this.controller.delAllCarts)
 
-        routerCart.delete("/" , this.controller.del)
-
-        routerCart.post("/:cart_user/products/:id_prod" , this.controller.prod)
+        routerCart.post("/:cart_user/products/:id_prod" , this.controller.addProdToUserCart)
         //     let cart = await containerCart.getAll();
         //     res.send(cart[0].products);
         //   });
