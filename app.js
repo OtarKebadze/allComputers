@@ -93,7 +93,7 @@ const server = app.listen(PORT, () => {
     console.log(`
   °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
 
-      Running in: http://localhost:${PORT}      
+      Running in PORT: :${PORT}      
 
   °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
   `);

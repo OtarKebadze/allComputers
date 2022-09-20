@@ -29,7 +29,7 @@ class ControllerSession {
 
     loginUser = (req, res) => {
         try {
-            res.redirect(`http://localhost:${PORT}/session/main`);
+            res.redirect(`/session/main`);
         } catch (error) {
             httpError(res, error);
         }
@@ -66,7 +66,7 @@ class ControllerSession {
         req.session.destroy((err) => {
             if (req.session === undefined) {
                 setTimeout(() => {
-                    res.redirect(`http://localhost:${PORT}/session/login`);
+                    res.redirect(`/session/login`);
                 }, 1000);
             }
         });

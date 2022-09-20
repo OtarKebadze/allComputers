@@ -38,7 +38,7 @@ class ControllerProducts {
         try {
             const data = req.body;
             await this.service.createNewProduct(data);
-            res.redirect(`http://localhost:${PORT}/products`);
+            res.redirect(`/products`);
         } catch (error) {
             httpError(res, error);
         }

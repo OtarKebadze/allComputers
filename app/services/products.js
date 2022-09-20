@@ -48,13 +48,13 @@ class ServiceProducts {
         }
         await this.dao.deleteById(id);
         console.log(`Succesfully deleted One Product with id: ${id}
-    <a href="http://localhost:${PORT}/products">GO TO MAIN PAGE</a>`);
+    <a href="/products">GO TO MAIN PAGE</a>`);
     };
 
     deleteAllProductsFromDatabase = async () => {
         await this.dao.deleteAll();
         console.log(`SUCESSFULLY DELETED ALL PRODUCTS FROM DATABASE
-        <a href="http://localhost:${PORT}/products">GO TO MAIN PAGE</a>`);
+        <a href="/products">GO TO MAIN PAGE</a>`);
     };
 }
 

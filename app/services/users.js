@@ -32,7 +32,7 @@ class ServiceUsers {
         }
         await this.dao.deleteById(id);
         return `Succesfully One User
-    <a href="http://localhost:${PORT}/users">GO TO MAIN PAGE</a>
+    <a href="/users">GO TO MAIN PAGE</a>
     `;
     };
 

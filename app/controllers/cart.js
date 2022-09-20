@@ -20,7 +20,7 @@ class CartController {
         let idProd = req.params.id_prod;
         let cartUser = req.params.cart_user;
         await this.service.addProdToCart(idProd,cartUser)
-        res.redirect(`http://localhost:${PORT}/session/main`)
+        res.redirect(`/session/main`)
     };
 }
 
