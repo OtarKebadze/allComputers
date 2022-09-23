@@ -1,16 +1,16 @@
-const { DaoProductMongoose } = require("../daos/daosProductMongoose");
+// const { DaoProductMongoose } = require("../daos/daosProductMongoose");
 
-class ProductDaoFactory {
-    static create(type) {
-        switch (type) {
-            case "MONGOOSE":
-                return new DaoProductMongoose();
-            default:
-                throw new Error("NONE EXISTING TYPE");
-        }
-    }
-}
+// class ProductDaoFactory {
+//     static create(type) {
+//         switch (type) {
+//             case "MONGOOSE":
+//                 return new DaoProductMongoose();
+//             default:
+//                 throw new Error("NONE EXISTING TYPE");
+//         }
+//     }
+// }
 
-module.exports = {
-    ProductDaoFactory
-}
+// module.exports = {
+//     ProductDaoFactory
+// }

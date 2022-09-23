@@ -1,10 +1,11 @@
 const { v4: uuid } = require("uuid");
-const { DAO_TYPE: daoType } = require("../../config");
-const { ProductDaoFactory } = require("../factory/daoProductsFactory");
+const { DaoProductMongoose } = require("../daos/daosProductMongoose");
+// const { DAO_TYPE: daoType } = require("../../config");
+// const { ProductDaoFactory } = require("../factory/daoProductsFactory");
 
 class ServiceProducts {
     constructor() {
-        this.dao = ProductDaoFactory.create(daoType)
+        this.dao = new DaoProductMongoose()
     }
 
     getAllProductsFromDb = async () => {

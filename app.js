@@ -1,9 +1,9 @@
-const path = require("path");
+// const path = require("path");
 
-require("dotenv").config({
-    path: path.resolve(__dirname, process.env.NODE_ENV + ".env"),
-});
-
+// require("dotenv").config({
+//     path: path.resolve(__dirname, process.env.NODE_ENV + ".env"),
+// });
+require("dotenv").config()
 const express = require("express");
 const app = express();
 const passport = require("./app/middlewares/passport");

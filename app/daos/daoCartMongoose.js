@@ -1,33 +1,34 @@
 const { MongooseContainer } = require("../containers/mongooseContainer");
 const mongoose = require("mongoose");
 
-
-const schemaDTOCart = new mongoose.Schema({
-    userCart: {type:String , required:true},
-    products: Array
-},{
-    timestamps:true,
-    __v:false
-})
-
+const schemaDTOCart = new mongoose.Schema(
+    {
+        userCart: { type: String, required: true },
+        products: Array,
+    },
+    {
+        timestamps: true,
+        __v: false,
+    }
+);
 
 let instance = null;
 
 class DaoCartMongoose extends MongooseContainer {
     constructor() {
-        super("cart" , schemaDTOCart);
-        this.model = mongoose.model("cart" , schemaDTOCart)
+        super("cart", schemaDTOCart);
+        this.model = mongoose.model("cart", schemaDTOCart);
     }
 
-    async createCart(user){
-        const cart = new this.model()
-        cart.userCart= user;
+    async createCart(user) {
+        const cart = new this.model();
+        cart.userCart = user;
         return cart;
     }
 
-    async addProd(userCart, prod){
-    //logger.info (prod)
-    await this.update(userCart,prod)
+    async addProd(userCart, prod) {
+        //logger.info (prod)
+        await this.update(userCart, prod);
     }
 
     async save(obj) {
@@ -52,12 +53,11 @@ class DaoCartMongoose extends MongooseContainer {
             { $set: { products: obj } }
         );
     }
-    getInstance(){
-        if (!instance) instance = new DaoCartMongoose()
-        return instance
-        }
+    getInstance() {
+        if (!instance) instance = new DaoCartMongoose();
+        return instance;
+    }
 }
-
 
 module.exports = {
     DaoCartMongoose,
