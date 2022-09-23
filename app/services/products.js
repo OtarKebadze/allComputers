@@ -7,7 +7,9 @@ class ServiceProducts {
     constructor() {
         this.dao = new DaoProductMongoose()
     }
-
+    getAll = async ()=>{
+        return await this.dao.getAll();
+    }
     getAllProductsFromDb = async () => {
         let products = await this.dao.getAll();
         if (products === []) {

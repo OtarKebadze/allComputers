@@ -10,6 +10,10 @@ class ControllerProducts {
         this.cartDao = new DaoCartMongoose();
     }
 
+    getAll = async (req,res)=>{
+        let products = await this.service.getAll()
+        res.send(products)
+    }
     getAllProducts = async (req, res) => {
         try {
             let allProducts = await this.service.getAllProductsFromDb();

@@ -15,6 +15,8 @@ class RouterProducts {
         
         routerProd.get("/", this.controller.getAllProducts);
 
+        routerProd.get("/prods", this.controller.getAll);
+
         routerProd.get("/:id_prod", this.controller.getOneProduct);
 
         routerProd.post("/", this.controller.saveProductInDatabase);
