@@ -13,7 +13,7 @@ class RouterProducts {
     config() {
         const routerProd = Router();
         
-        routerProd.get("/", this.controller.getAllProducts);
+        routerProd.get("/", checkAuthenticated , this.controller.getAllProducts);
 
         routerProd.get("/prods", this.controller.getAll);
 
