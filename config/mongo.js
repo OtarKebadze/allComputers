@@ -5,8 +5,8 @@ const mongooseOptions = {
     useUnifiedTopology: true,
 };
 
-const dbConnect = () => {
-    mongoose.connect(url, mongooseOptions, (error, res) => {
+const dbConnect = async () => {
+    await mongoose.connect(url, mongooseOptions, (error, res) => {
         if (!error) {
             console.log(`
       °°°°°°°°°°°°°°°°°°
