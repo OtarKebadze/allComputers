@@ -44,12 +44,12 @@ class ControllerProducts {
         }
     };
 
-    updateProduct = (req, res) => {
-        try {
-        } catch (error) {
-            httpError(res, error);
-        }
-    };
+    // updateProduct = (req, res) => {
+    //     try {
+    //     } catch (error) {
+    //         httpError(res, error);
+    //     }
+    // };
 
     deleteOneProduct = async (req, res) => {
         try {
