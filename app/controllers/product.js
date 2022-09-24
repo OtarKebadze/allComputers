@@ -42,7 +42,7 @@ class ControllerProducts {
         try {
             const data = req.body;
             await this.service.createNewProduct(data);
-            res.redirect(`/products`);
+            res.status(200).redirect(`/products`);
         } catch (error) {
             httpError(res, error);
         }
