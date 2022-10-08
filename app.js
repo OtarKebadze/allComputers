@@ -11,7 +11,6 @@ const bodyParser = require("body-parser");
 const MongoStore = require("connect-mongo");
 const coockieParser = require("cookie-parser");
 const session = require("express-session");
-const cors = require("cors");
 const { PORT } = require("./config/index");
 const { DB_URI: dburl, COOKIE_SECRET: secret } = process.env;
 
@@ -70,7 +69,7 @@ app.use(passport.session());
 
 app.use("/products", routerProducts.config());
 app.use("/users", routerUsers.config());
-app.use("/session", routerSession.config());
+app.use("/", routerSession.config());
 app.use("/cart", routerCart.config());
 
 // °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°//

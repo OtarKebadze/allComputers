@@ -11,18 +11,17 @@
     <div class="containerRegister">
         <div class="box">
         <h1>REGISTER</h1>
-        <form action="/session/register" method="POST" class="form">
+        <form action="/register" method="POST" class="form">
         <input type="text" name="username" id="username" placeholder="ADD USERNAME" autocomplete="off" required>
         <input type="email" name="email" id="email" placeholder="ADD EMAIL" autocomplete="off" required>
         <input type="password" name="password" id="pass" placeholder="ADD PASSWORD" autocomplete="off" required>
+        <input type="password" name="password2" id="pass" placeholder="ADD PASSWORD AGAIN PLEASE" autocomplete="off" required>
         <input type="text" name="address" id="address" placeholder="INSERT CURRENT ADDRESS" autocomplete="off" required>
         <input type="number" name="age" id="age" placeholder="INSERT AGE" autocomplete="off" required>
         <input type="tel" name="phone" id="phone" placeholder="(countryCode)(areaCode)(phoneNumber)" autocomplete="off" required>
-        <!-- <p class="formTitle">AVATAR</p>
-        <input type="file" accept="img/jpeg" name="img" id="img" value="IMAGE OR AVATAR" autocomplete="off" required> -->
         <section class="btnContainer">
         <input type="submit" value="REGISTER" class="button">
-        <a href="/session/login" class="button">GO TO LOGIN</a>
+        <a href="/" class="button">GO TO LOGIN</a>
         </section>
         </div>
        

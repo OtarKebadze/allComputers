@@ -1,4 +1,3 @@
-const { PORT } = require("../../config");
 const { DaoCartMongoose } = require("../daos/daoCartMongoose");
 const { httpError } = require("../helpers/handleError");
 
@@ -10,10 +9,10 @@ class ControllerProducts {
         this.cartDao = new DaoCartMongoose();
     }
 
-    getAll = async (req,res)=>{
-        let products = await this.service.getAll()
-        res.send(products)
-    }
+    getAll = async (req, res) => {
+        let products = await this.service.getAll();
+        res.send(products);
+    };
     getAllProducts = async (req, res) => {
         try {
             let allProducts = await this.service.getAllProductsFromDb();
@@ -23,6 +22,34 @@ class ControllerProducts {
             );
             let userCart = cartFound[0].userCart;
             res.render("products", { allProducts, userCart });
+        } catch (error) {
+            httpError(res, error);
+        }
+    };
+
+    getAllNotebooks = async (req, res) => {
+        try {
+            let allNotebooks = await this.service.getOnlyNotebooks();
+            let cart = await this.cartDao.getAll();
+            let cartFound = cart.filter(
+                (user) => user.userCart === req.user.username
+            );
+            let userCart = cartFound[0].userCart;
+            res.render(`notebooks`, { allNotebooks ,userCart});
+        } catch (error) {
+            httpError(res, error);
+        }
+    };
+
+    getAllComputers = async (req, res) => {
+        try {
+            let cart = await this.cartDao.getAll();
+            let cartFound = cart.filter(
+                (user) => user.userCart === req.user.username
+            );
+            let userCart = cartFound[0].userCart;
+            let allComputers = await this.service.GetOnlyComputers();
+            res.render(`computers`, { allComputers ,userCart});
         } catch (error) {
             httpError(res, error);
         }
@@ -48,12 +75,16 @@ class ControllerProducts {
         }
     };
 
-    // updateProduct = (req, res) => {
-    //     try {
-    //     } catch (error) {
-    //         httpError(res, error);
-    //     }
-    // };
+    updateProduct = async (req, res) => {
+        try {
+            const id = req.params.id_prod;
+            const newData = req.body;
+            await this.service.productUpdated(id,newData);
+            res.redirect('/products')
+        } catch (error) {
+            httpError(res, error);
+        }
+    };
 
     deleteOneProduct = async (req, res) => {
         try {

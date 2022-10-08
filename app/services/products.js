@@ -5,17 +5,29 @@ const { DaoProductMongoose } = require("../daos/daosProductMongoose");
 
 class ServiceProducts {
     constructor() {
-        this.dao = new DaoProductMongoose()
+        this.dao = new DaoProductMongoose();
     }
-    getAll = async ()=>{
+    getAll = async () => {
         return await this.dao.getAll();
-    }
+    };
     getAllProductsFromDb = async () => {
         let products = await this.dao.getAll();
         if (products === []) {
             return "";
         }
         return products;
+    };
+
+    getOnlyNotebooks = async () => {
+        let allProds = await this.dao.getAll();
+        let result = allProds.filter((prods) => prods.category == "NOTEBOOK");
+        return result;
+    };
+
+    GetOnlyComputers = async () => {
+        let allProds = await this.dao.getAll();
+        let result = allProds.filter((prods) => prods.category == "COMPUTER");
+        return result;
     };
 
     getOneProductFromDb = async (id) => {
@@ -41,6 +53,20 @@ class ServiceProducts {
         console.log(
             `Added succesfully ${newProduct.title} with id: ${newProduct.id}`
         );
+    };
+
+    productUpdated = async (id, newData) => {
+        await this.dao.deleteById(id);
+        const newProduct = {
+            id: uuid(),
+            title: newData.title,
+            thumbnail: newData.thumbnail,
+            price: newData.price,
+            description: newData.description,
+            category: newData.category,
+        };
+        await this.dao.save(newProduct);
+        console.log(`PRODUCT UPDATED WITH ID : ${newProduct.id} `);
     };
 
     deleteOneFromDatabase = async (id) => {

@@ -1,4 +1,3 @@
-const { PORT } = require("../../config/index");
 const { DaoCartMongoose } = require("../daos/daoCartMongoose");
 const { httpError } = require("../helpers/handleError");
 
@@ -12,7 +11,7 @@ class ControllerSession {
             let user = req.body.username;
             let cart = await this.dao.createCart(user);
             await this.dao.save(cart);
-            res.redirect("/session/login");
+            res.redirect("/");
         } catch (error) {
             httpError(res, error);
         }
@@ -20,8 +19,8 @@ class ControllerSession {
 
     getRegisterPage = (req, res) => {
         try {
-            let port = PORT;
-            res.render("register", { port });
+
+            res.render("register");
         } catch (error) {
             httpError(res, error);
         }
@@ -29,16 +28,16 @@ class ControllerSession {
 
     loginUser = (req, res) => {
         try {
-            res.redirect(`/session/main`);
+            res.redirect(`/main`);
         } catch (error) {
             httpError(res, error);
         }
     };
 
+
     getLoginPage = (req, res) => {
         try {
-            let port = PORT;
-            res.render("login", { port });
+            res.render("login");
         } catch (error) {
             httpError(res, error);
         }
@@ -46,8 +45,7 @@ class ControllerSession {
 
     getFailRegisterPage = (req, res) => {
         try {
-            let port = PORT;
-            res.render("register_fail", { port });
+            res.render("register_fail");
         } catch (error) {
             httpError(res, error);
         }
@@ -55,8 +53,7 @@ class ControllerSession {
 
     getFailLoginPage = (req, res) => {
         try {
-            let port = PORT;
-            res.render("login_fail", { port });
+            res.render("login_fail");
         } catch (error) {
             httpError(res, error);
         }
@@ -66,7 +63,7 @@ class ControllerSession {
         req.session.destroy((err) => {
             if (req.session === undefined) {
                 setTimeout(() => {
-                    res.redirect(`/session/login`);
+                    res.redirect(`/`);
                 }, 1000);
             }
         });
@@ -74,13 +71,12 @@ class ControllerSession {
 
     getMainPage = async (req, res) => {
         try {
-            let port = PORT;
             let cart = await this.dao.getAll();
             let userCart = cart.filter(
                 (cart) => cart.userCart === req.user.username
             );
             let user = req.user.username
-            res.render("mainpage", { port, userCart, user });
+            res.render("mainpage", { userCart, user });
         } catch (error) {
             httpError(res, error);
         }

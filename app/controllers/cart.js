@@ -14,13 +14,13 @@ class CartController {
     };
 
     delAllCarts = async (req, res) => {
-        let cart = await this.service.delAllCartsFromDb();
+        await this.service.delAllCartsFromDb();
     };
     addProdToUserCart = async (req, res) => {
         let idProd = req.params.id_prod;
         let cartUser = req.params.cart_user;
         await this.service.addProdToCart(idProd,cartUser)
-        res.redirect(`/session/main`)
+        res.redirect(`/main`)
     };
 }
 

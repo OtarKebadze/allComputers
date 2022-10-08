@@ -14,6 +14,12 @@ passport.use(
         async (req, username, password, done) => {
             const users = await daoUsersMongoose.getAll();
             const userFound = users.find((us) => us.username == username);
+            const password2 = req.body.password2;
+            if (password !== password2) {
+                    console.log({ message: "PASS NOT MATCH" })
+                    return done(null, false, { message: "PASS NOT MATCH" });
+                    
+            }
             if (userFound) {
               return done(null, false, { message: "USERNAME ALREADY IN USE" });
             } else {
@@ -21,15 +27,19 @@ passport.use(
                     password,
                     bcrypt.genSaltSync(10)
                 );
+                const passHashed2 = bcrypt.hashSync(
+                    password2,
+                    bcrypt.genSaltSync(10)
+                );
                 const newUser = {
                     id: uuid(),
                     username,
                     email: req.body.email,
                     password: passHashed,
+                    password2: passHashed2,
                     address: req.body.address,
                     age: req.body.age,
                     phone: req.body.phone,
-                    //img: req.body.img,
                 };
                 await daoUsersMongoose.save(newUser);
                 return done(null, newUser);

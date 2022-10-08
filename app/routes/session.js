@@ -23,7 +23,7 @@ class RouterSession {
         routerSession.post(
             "/register",
             passport.authenticate("register", {
-                failureRedirect: "/session/register_fail",
+                failureRedirect: "/register_fail",
                 failureMessage: true,
             }),
             this.controller.registerNewUser
@@ -42,13 +42,15 @@ class RouterSession {
         routerSession.post(
             "/login",
             passport.authenticate("autenticate", {
-                failureRedirect: "/session/login_fail",
+                failureRedirect: "/login_fail",
                 failureMessage: true,
             }),
             this.controller.loginUser
         );
 
-        routerSession.get("/login", this.controller.getLoginPage);
+        routerSession.get("/", this.controller.getLoginPage);
+
+
 
         routerSession.get("/main", checkAuthenticated , this.controller.getMainPage);
 

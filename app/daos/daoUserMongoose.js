@@ -7,6 +7,7 @@ const userDtochema = new mongoose.Schema(
         username: { type: String, unique: true, required: true },
         email: { type: String, required: true },
         password: { type: String, required: true },
+        password2: { type: String, required: true },
         address: { type: String, required: true },
         age: { type: Number, required: true },
         phone: { type: Number, unique: true, required: true },
@@ -42,7 +43,7 @@ class DaoUserMongoose extends MongooseContainer {
     }
     async update(id, obj) {
         return await this.schema.updateOne(
-            { _id: id },
+            { id: id },
             { $set: { products: obj } }
         );
     }

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    <title>Our Products</title>
+</head>
+<body>
+    <div class="container">
+        <div class="boxProducts">
+             <form action="/products" method="POST" class="form">
+                <input type="text" name="title" placeholder="TITLE OR PRODUCT HERE" autocomplete="off">
+                <input type="text" name="thumbnail" id="thumbnail" placeholder="PRODUCT IMAGE" autocomplete="off">
+                <input type="number" name="price" id="price" placeholder="PRODUCT PRICE HERE" autocomplete="off">
+                <input type="text" name="category" id="category" placeholder="PRODUCT CATEGORY" autocomplete="off">
+                <textarea name="description" cols="80" rows="10"></textarea>
+                <input type="submit" class="button" value="ADD PRODUCTS">
+            </form>
+        </div>
+    <h1>OUR COMPUTERS</h1>
+    <% if (allComputers !== "") { %>
+        <table class="productView">
+            <thead>
+                <th id="title"> ID </th>
+                <th>TITLE</th>
+                <th id="title price">PRICE</th>
+                <th id="title ">IMAGE</th>
+                <th id="title">DESCRIPTION</th>
+                <th id="title">CATEGORY</th>
+            </thead>
+            <tbody>
+                <% allComputers.forEach((comps)=> { %>
+                <tr>
+                    <td ><%= comps.id %></td>
+                    <td><%= comps.title %></td>
+                    <td class="price">$ <%= comps.price %></td>
+                    <td><img style="width: 150px; height:100px" src=<%= comps.thumbnail %>></td>
+                    <td><%= comps.description %></td>
+                    <td><%= comps.category %></td>
+                    <td>
+                    <form action="/cart/<%= userCart %>/products/<%= comps.id %>" method="POST">
+                    <input class="button" type="submit" id = "<%= comps.id %>" value="ADD TO CART"></td>
+                    </form>
+                </tr>
+                <% }) %>
+            </tbody>
+    </table>
+    <%}else if (allComputers == ""){%>
+            <table class="productView">
+                <thead>
+                    <th id="title">TITLE</th>
+                    <th id="title">PRICE</th>
+                    <th id="title">IMAGE</th>
+                    <th id="title">DESCRIPTION</th>
+                    <th id="title">CATEGORY</th>
+                </thead>
+        </table>
+        <p class="warning">NO PRODUCTS FOUND</p>
+    <% } %>
+    </div>
+</body>
+</html>

@@ -41,8 +41,8 @@ class DaoProductMongoose extends MongooseContainer {
     }
     async update(id, obj) {
         return await this.schema.updateOne(
-            { _id: id },
-            { $set: { products: obj } }
+            { id: id },
+            { $set: { obj } }
         );
     }
     getInstance(){

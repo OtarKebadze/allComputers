@@ -17,11 +17,15 @@ class RouterProducts {
 
         routerProd.get("/prods", this.controller.getAll);
 
+        routerProd.get("/notebooks", this.controller.getAllNotebooks);
+
+        routerProd.get("/computers", this.controller.getAllComputers);
+
         routerProd.get("/:id_prod", this.controller.getOneProduct);
 
         routerProd.post("/", this.controller.saveProductInDatabase);
 
-        // routerProd.put("/:id_prod", this.controller.updateProduct);
+        routerProd.patch("/:id_prod", this.controller.updateProduct);
 
         routerProd.delete("/:id_prod", this.controller.deleteOneProduct);
 
