@@ -33,8 +33,7 @@ class ServiceProducts {
     getOneProductFromDb = async (id) => {
         let productInDb = await this.dao.getById(id);
         if (productInDb.length === 0 || !productInDb) {
-            console.error("UNEXISTENT ID");
-            return { error: "UNEXISTENT ID" };
+            return false
         }
         return productInDb;
     };

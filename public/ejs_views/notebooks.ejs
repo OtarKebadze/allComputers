@@ -11,17 +11,17 @@
     <title>Our Products</title>
 </head>
 <body>
+    <nav>
+        <h1>Welcome <%= userCart %></h1>
+        <a href="/products">PRODUCTS</a>
+        <a href="/products/notebooks">NOTEBOOKS</a>
+        <a href="/products/computers">COMPUTRERS</a>
+        <a href="">SUPPORT</a>
+        <form action="/logout" method="POST">
+            <input type="submit" value="LOG OUT" />
+        </form>
+    </nav>
     <div class="container">
-        <div class="boxProducts">
-             <form action="/products" method="POST" class="form">
-                <input type="text" name="title" placeholder="TITLE OR PRODUCT HERE" autocomplete="off">
-                <input type="text" name="thumbnail" id="thumbnail" placeholder="PRODUCT IMAGE" autocomplete="off">
-                <input type="number" name="price" id="price" placeholder="PRODUCT PRICE HERE" autocomplete="off">
-                <input type="text" name="category" id="category" placeholder="PRODUCT CATEGORY" autocomplete="off">
-                <textarea name="description" cols="80" rows="10"></textarea>
-                <input type="submit" class="button" value="ADD PRODUCTS">
-            </form>
-        </div>
     <h1>OUR NOTEBOOKS</h1>
     <% if (allNotebooks !== "") { %>
         <table class="productView">

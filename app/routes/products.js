@@ -15,6 +15,8 @@ class RouterProducts {
         
         routerProd.get("/", checkAuthenticated , this.controller.getAllProducts);
 
+        routerProd.get("/addNewProduct", checkAuthenticated , this.controller.getNewProductPage);
+
         routerProd.get("/prods", this.controller.getAll);
 
         routerProd.get("/notebooks", this.controller.getAllNotebooks);

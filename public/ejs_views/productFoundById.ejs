@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="containerMain">
+        <nav>
+            <h1>Welcome <%= userCart %></h1>
+            <a href="/products">PRODUCTS</a>
+            <a href="/products/notebooks">NOTEBOOKS</a>
+            <a href="/products/computers">COMPUTRERS</a>
+            <a href="">SUPPORT</a>
+            <form action="/logout" method="POST">
+                <input type="submit" value="LOG OUT" />
+            </form>
+        </nav>
+        <div class="CartContainer">
+            <% if (productFound != false) { %> 
+            <% productFound.forEach((prod)=> { %>
+            <div class="cartCard">
+                <section><p><%= prod.title %></p></section>
+                <section class="descriptionCard">
+                    <img
+                        style="width: 150px; height: 100px"
+                        src="<%=prod.thumbnail%>"/>
+                    <p><%= prod.description %></p>
+                    <section>
+                        <p>$ <%= prod.price %></p>
+                        <section>
+                            <button>-</button>
+                            <p>1</p>
+                            <button>+</button>
+                        </section>
+                    </section>
+                </section>
+            </div>
+            <%})%>
+        </div>
+        <% }else if(productFound == false){%>
+        <div class="cart">UNEXISTING PRODUCT ID</div>
+        <a href="/products">Back To Products</a>
+        <% }%>
+    </div>
+</body>
+</html>

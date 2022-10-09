@@ -13,10 +13,7 @@ const coockieParser = require("cookie-parser");
 const session = require("express-session");
 const { PORT } = require("./config/index");
 const { DB_URI: dburl, COOKIE_SECRET: secret } = process.env;
-
 const { dbConnect, mongooseOptions } = require("./config/mongo");
-
-
 const { RouterSession } = require("./app/routes/session");
 const { RouterProducts } = require("./app/routes/products");
 const { RouterUsers } = require("./app/routes/users");
