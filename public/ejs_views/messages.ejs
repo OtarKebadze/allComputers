@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/normalizr@3.6.1/dist/normalizr.browser.min.js
+    "></script>
+        <script src="/main.js" defer type="module"></script>
+        <link rel="stylesheet" href="/styles.css" />
+        <title>Document</title>
+    </head>
+    <body>
+        <div class="container">
+            <nav>
+                <h1>Chatting as <p id="userMail"><%= userMail %></p></h1>
+                <a href="/main">CART</a>
+                <a href="/products">PRODUCTS</a>
+                <a href="/products/notebooks">NOTEBOOKS</a>
+                <a href="/products/computers">COMPUTRERS</a>
+                <a href="/chat">SUPPORT</a>
+                <form action="/logout" method="POST">
+                    <input type="submit" value="LOG OUT" />
+                </form>
+            </nav>
+            <form action="" id="form">
+                <label for="message">Messages : </label>
+            <textarea name="message" id="message" cols="20" rows="2"></textarea>
+            <button type="submit">SEND MESSAGE</button>
+            </form>
+
+            <div id="messages"></div>
+        </div>
+    </body>
+</html>
