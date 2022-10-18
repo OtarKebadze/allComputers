@@ -4,17 +4,19 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles.css">
     <title>Document</title>
 </head>
 <body>
     <div class="container">
         <nav>
-            <h1>Welcome <%= userCart %></h1>
-            <a href="/main">CART</a>
-            <a href="/products">PRODUCTS</a>
-            <a href="/products/notebooks">NOTEBOOKS</a>
-            <a href="/products/computers">COMPUTRERS</a>
-            <a href="/chat">SUPPORT</a>
+            <h1 id="title">Welcome <%= username %></h1>
+            <a class="links" href="/main">CART</a>
+            <a class="links" href="/products">PRODUCTS</a>
+            <a class="links" href="/products/notebooks">NOTEBOOKS</a>
+            <a class="links" href="/products/computers">COMPUTRERS</a>
+            <a class="links" href="/chat">SUPPORT</a>
+            <a class="links" href="/chat/<%= username %>">PERSONAL MESSAGES</a>
             <form action="/logout" method="POST">
                 <input type="submit" value="LOG OUT" />
             </form>
@@ -32,9 +34,10 @@
                     <section>
                         <p>$ <%= prod.price %></p>
                         <section>
-                            <button>-</button>
-                            <p>1</p>
-                            <button>+</button>
+                            <form action="/cart/<%= username %>/products/<%= prod.id %>/addQtyById" method="POST">
+                            <input type="text" placeholder="PLEASTE INTRODUCE QTY, MUST BE 1 OR MORE" name="qty" required>
+                            <input class="button" type="submit" id = "<%= prod.id %>" value="ADD TO CART">
+                            </form>
                         </section>
                     </section>
                 </section>

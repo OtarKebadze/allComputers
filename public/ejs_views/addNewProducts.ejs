@@ -8,7 +8,20 @@
     <title>Document</title>
   </head>
   <body>
+
     <div class="container">
+      <nav>
+        <h1 id="title">Welcome <%= username %></h1>
+        <a class="links" href="/main">CART</a>
+        <a class="links" href="/products">PRODUCTS</a>
+        <a class="links" href="/products/notebooks">NOTEBOOKS</a>
+        <a class="links" href="/products/computers">COMPUTRERS</a>
+        <a class="links" href="/chat">SUPPORT</a>
+        <a class="links" href="/chat/<%= username %>">PERSONAL MESSAGES</a>
+        <form action="/logout" method="POST">
+            <input type="submit" value="LOG OUT" />
+        </form>
+    </nav>
       <div class="boxProducts">
         <form action="/products" method="POST" class="form">
           <input
@@ -41,6 +54,35 @@
           <textarea name="description" cols="80" rows="10"></textarea>
           <input type="submit" class="button" value="ADD PRODUCTS" />
         </form>
+        <h1>OUR PRODUCTS</h1>
+        <% if (allProducts !== "") { %>
+            <table class="productView">
+                <thead>
+                    <th id="title"> ID </th>
+                    <th>TITLE</th>
+                    <th id="title price">PRICE</th>
+                    <th id="title ">IMAGE</th>
+                    <th id="title">DESCRIPTION</th>
+                    <th id="title">CATEGORY</th>
+                </thead>
+                <tbody>
+                    <% allProducts.forEach((prod)=> { %>
+                    <tr>
+                        <td ><%= prod.id %></td>
+                        <td><%= prod.title %></td>
+                        <td class="price">$ <%= prod.price %></td>
+                        <td><img style="width: 150px; height:100px" src=<%= prod.thumbnail %>></td>
+                        <td><%= prod.description %></td>
+                        <td><%= prod.category %></td>
+                        <td>
+                        <form action="/products/delete/<%= prod.id %>" method="POST">
+                        <input class="button" type="submit" id = "<%= prod.id %>" value="X"></td>
+                        </form>
+                    </tr>
+                    <% }) %>
+                </tbody>
+        </table>
+        <% } %>
       </div>
     </div>
   </body>

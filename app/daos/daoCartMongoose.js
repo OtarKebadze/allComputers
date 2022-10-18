@@ -1,8 +1,11 @@
 const { MongooseContainer } = require("../containers/mongooseContainer");
 const mongoose = require("mongoose");
 
+const { v4: uuid } = require("uuid");
+
 const schemaDTOCart = new mongoose.Schema(
     {
+        id: { type: String, unique: true, required: true },
         userCart: { type: String, required: true },
         products: Array,
     },
@@ -12,22 +15,13 @@ const schemaDTOCart = new mongoose.Schema(
     }
 );
 
-let instance = null;
-
 class DaoCartMongoose extends MongooseContainer {
     constructor() {
         super("cart", schemaDTOCart);
         this.model = mongoose.model("cart", schemaDTOCart);
     }
 
-    async createCart(user) {
-        const cart = new this.model();
-        cart.userCart = user;
-        return cart;
-    }
-
     async addProd(userCart, prod) {
-        //logger.info (prod)
         await this.update(userCart, prod);
     }
 
@@ -35,6 +29,14 @@ class DaoCartMongoose extends MongooseContainer {
         let col = await this.schema.create(obj);
         await col.save();
     }
+
+    async createCart(username) {
+        const cart = new this.model();
+        cart.id= uuid();
+        cart.userCart = username;
+        return cart;
+    }
+
     async getById(id) {
         return await this.schema.find({ id: id }).lean();
     }
@@ -52,10 +54,6 @@ class DaoCartMongoose extends MongooseContainer {
             { userCart: userCart },
             { $set: { products: obj } }
         );
-    }
-    getInstance() {
-        if (!instance) instance = new DaoCartMongoose();
-        return instance;
     }
 }
 

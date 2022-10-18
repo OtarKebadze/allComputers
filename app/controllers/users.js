@@ -35,13 +35,6 @@ class ProductController {
         }
     };
 
-    updateUser = (req, res) => {
-        try {
-        } catch (error) {
-            httpError(res, error);
-        }
-    };
-
     deleteOneUser = async (req, res) => {
         try {
             let id = req.params.id_user;

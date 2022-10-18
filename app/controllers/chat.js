@@ -1,24 +1,29 @@
-const { DaoChatMongoose } = require("../daos/daoChatMongoose");
-const { DaoUserMongoose } = require("../daos/daoUserMongoose");
-
-
+const { ChatService } = require("../services/chat");
 
 class ChatController {
     constructor() {
-        this.dao = new DaoChatMongoose();
-        this.daoUsers = new DaoUserMongoose();
+        this.service = new ChatService();
     }
-    getChatPage = async (req,res)=>{
-        let allUsers = await this.daoUsers.getAll();
-        let userFound = allUsers.filter(
-          (user) => user.username === req.user.username
-        );
-        const userMail = userFound[0].email
-        res.render('messages', { userMail })
-    }
-    getEmailMessages = (req,res) => {
-        console.log('hola')
-    }
+    getChatPage = async (req, res) => {
+        const { username , isAdmin} = req.user;
+        let type;
+        if (isAdmin === true) {
+            type = 'admin'
+        }else{
+            type = 'user'
+        }
+        res.render("messages", { username ,type});
+    };
+    getEmailMessages = async (req, res) => {
+        const  paramMail  = req.params.email;
+        const { username } = req.user;
+        if (paramMail !== username){
+        res.render('error_mail', { username } )
+        }else{
+        const messages = await this.service.getAllMessagesByEmail(paramMail);
+        res.render("personalMessages", { messages , username});
+        }
+    };
 }
 
 module.exports = {

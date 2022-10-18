@@ -13,12 +13,13 @@
 <body>
     <div class="container">
         <nav>
-            <h1>Welcome <%= userCart %></h1>
-            <a href="/main">CART</a>
-            <a href="/products">PRODUCTS</a>
-            <a href="/products/notebooks">NOTEBOOKS</a>
-            <a href="/products/computers">COMPUTRERS</a>
-            <a href="/chat">SUPPORT</a>
+            <h1 id="title">Welcome <%= username %></h1>
+            <a class="links" href="/main">CART</a>
+            <a class="links" href="/products">PRODUCTS</a>
+            <a class="links" href="/products/notebooks">NOTEBOOKS</a>
+            <a class="links" href="/products/computers">COMPUTRERS</a>
+            <a class="links" href="/chat">SUPPORT</a>
+            <a class="links" href="/chat/<%= username %>">PERSONAL MESSAGES</a>
             <form action="/logout" method="POST">
                 <input type="submit" value="LOG OUT" />
             </form>
@@ -44,7 +45,7 @@
                     <td><%= prod.description %></td>
                     <td><%= prod.category %></td>
                     <td>
-                    <form action="/cart/<%= userCart %>/products/<%= prod.id %>" method="POST">
+                    <form action="/cart/<%= username %>/products/<%= prod.id %>" method="POST">
                     <input class="button" type="submit" id = "<%= prod.id %>" value="ADD TO CART"></td>
                     </form>
                 </tr>

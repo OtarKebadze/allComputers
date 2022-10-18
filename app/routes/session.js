@@ -52,7 +52,7 @@ class RouterSession {
 
 
 
-        routerSession.get("/main", checkAuthenticated , this.controller.getMainPage);
+        routerSession.get("/main", checkAuthenticated, this.controller.getMainPage);
 
         routerSession.get("/login_fail", this.controller.getFailLoginPage);
 

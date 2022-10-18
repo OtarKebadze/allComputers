@@ -1,19 +1,13 @@
-const autenticationUser = (req, res, next) => {
-    req.user = {
-      username: "Otar",
-      isAdmin: true,
-    };
-    next();
+const logger = require("../helpers/log4js");
+
+const isAdmin = (req, res, next) => {
+    if(req.user.isAdmin === true){
+      logger.info(`Connected as Admin`)
+      next()
+    }else{
+      res.redirect('/')
+    }
   };
-  const authorizeUser = (req, res, next) => {
-    if (req.user.isAdmin) next();
-    else
-      res
-        .status(403)
-        .send({
-          error: 403,
-          descripcion: 'YOU HAVE NO PERMISSION',
-        });
-  };
+
   
-  module.exports= {autenticationUser , authorizeUser};
+  module.exports= { isAdmin }

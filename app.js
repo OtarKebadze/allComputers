@@ -1,22 +1,18 @@
-// const path = require("path");
 
-// require("dotenv").config({
-//     path: path.resolve(__dirname, process.env.NODE_ENV + ".env"),
-// });
-require("dotenv").config()
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const { Server: HttpServer } = require("http");
 const { Server: SocketServer } = require("socket.io");
 const httpServer = new HttpServer(app);
 const socketServer = new SocketServer(httpServer);
-const passport = require("./app/middlewares/passport")
+const passport = require("./app/middlewares/passport");
 const bodyParser = require("body-parser");
 const MongoStore = require("connect-mongo");
 const coockieParser = require("cookie-parser");
 const session = require("express-session");
 const { PORT } = require("./config/index");
-const { DB_URI: dburl, COOKIE_SECRET: secret } = process.env;
+const { DB_URI: dburl, COOKIE_SECRET: secret , SESSION_EXPIRES} = process.env;
 const { dbConnect, mongooseOptions } = require("./config/mongo");
 const { RouterSession } = require("./app/routes/session");
 const { RouterProducts } = require("./app/routes/products");
@@ -24,12 +20,15 @@ const { RouterUsers } = require("./app/routes/users");
 const { RouterCart } = require("./app/routes/cart");
 const { RouterChat } = require("./app/routes/chat");
 const { DaoChatMongoose } = require("./app/daos/daoChatMongoose");
+const { RouterOrder } = require("./app/routes/orders");
+const logger = require("./app/helpers/log4js");
 const routerProducts = new RouterProducts();
 const routerUsers = new RouterUsers();
 const routerSession = new RouterSession();
 const routerCart = new RouterCart();
 const routerChat = new RouterChat();
-const daoChat = new DaoChatMongoose()
+const routerOrder = new RouterOrder();
+const daoChat = new DaoChatMongoose();
 
 // °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°//
 
@@ -58,7 +57,7 @@ app.use(
         resave: true,
         saveUninitialized: true,
         cookie: {
-            maxAge: 90000,
+            maxAge: SESSION_EXPIRES,
         },
     })
 );
@@ -77,6 +76,7 @@ app.use("/users", routerUsers.config());
 app.use("/", routerSession.config());
 app.use("/cart", routerCart.config());
 app.use("/chat", routerChat.config());
+app.use("/orders", routerOrder.config());
 
 // °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°//
 
@@ -93,17 +93,16 @@ app.set("view engine", "ejs");
 
 // °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°//
 
-
-socketServer.on("connection",async(socket) => {
-    console.log("NUEVO USUARIO CONECTADO");
+socketServer.on("connection", async (socket) => {
+    logger.info("NUEVO USUARIO CONECTADO");
     let dataFromClassChat = await daoChat.getAll();
     socket.emit("messages", dataFromClassChat);
     socket.on("new_message", async (msg) => {
-      await daoChat.save(msg);
-      let dataFromClassChat = await daoChat.getAll();
-      socketServer.sockets.emit("messages",dataFromClassChat);
+        await daoChat.save(msg);
+        let dataFromClassChat = await daoChat.getAll();
+        socketServer.sockets.emit("messages", dataFromClassChat);
     });
-  });
+});
 
 // °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°//
 
@@ -113,15 +112,16 @@ socketServer.on("connection",async(socket) => {
 
 dbConnect();
 const server = httpServer.listen(PORT, () => {
-    console.log(`
+    logger.info(`
   °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
 
       Running in PORT: :${PORT}      
 
   °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
   `);
+  logger.info(`CONNECTION TO PORT : ${PORT} WAS A SUCCESS`)
 });
 
 server.on("error", (error) => {
-    console.log(`ERROR IN SERVER : ${error.message}`);
+    logger.error(`ERROR IN SERVER : ${error.message}`);
 });

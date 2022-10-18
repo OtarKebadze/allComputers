@@ -1,15 +1,26 @@
+const { transporter } = require("../../config/transportNodemailer");
 const { DaoCartMongoose } = require("../daos/daoCartMongoose");
 const { httpError } = require("../helpers/handleError");
+const { CartService } = require("../services/cart");
+const { GMAIL } = process.env
 
 class ControllerSession {
     constructor() {
         this.dao = new DaoCartMongoose();
+        this.cart = new CartService();
     }
 
     registerNewUser = async (req, res) => {
         try {
-            let user = req.body.username;
-            let cart = await this.dao.createCart(user);
+            await transporter.sendMail({
+                from: GMAIL, 
+                to: GMAIL, 
+                subject:"New Registration",
+                html: `${req.user.username} registered succesfully to allComputers` , 
+            });
+
+            let { username } = req.body;
+            let cart = await this.dao.createCart(username);
             await this.dao.save(cart);
             res.redirect("/");
         } catch (error) {
@@ -19,7 +30,6 @@ class ControllerSession {
 
     getRegisterPage = (req, res) => {
         try {
-
             res.render("register");
         } catch (error) {
             httpError(res, error);
@@ -33,7 +43,6 @@ class ControllerSession {
             httpError(res, error);
         }
     };
-
 
     getLoginPage = (req, res) => {
         try {
@@ -71,12 +80,11 @@ class ControllerSession {
 
     getMainPage = async (req, res) => {
         try {
+            let { username } = req.user;
             let cart = await this.dao.getAll();
-            let userCart = cart.filter(
-                (cart) => cart.userCart === req.user.username
-            );
-            let user = req.user.username
-            res.render("mainpage", { userCart, user });
+            let userCart = cart.filter((cart) => cart.userCart === username);
+            let totalPrice = await this.cart.getTotalPrice(username);
+            res.render("mainpage", { userCart, username, totalPrice });
         } catch (error) {
             httpError(res, error);
         }

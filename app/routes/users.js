@@ -15,8 +15,6 @@ class RouterUsers {
 
         routerUsers.get("/:id_user", this.controller.getOneUser);
 
-        routerUsers.put("/:id_user", this.controller.updateUser);
-
         routerUsers.delete("/:id_user", this.controller.deleteOneUser);
 
         routerUsers.delete("/deleteAll/delete", this.controller.deleteAllUsers);

@@ -4,21 +4,19 @@ const mongoose = require("mongoose");
 const userDtochema = new mongoose.Schema(
     {
         id: { type: String, required: true },
-        username: { type: String, unique: true, required: true },
-        email: { type: String, required: true },
+        name: { type: String, unique: true, required: true },
+        username: { type: String, required: true },
         password: { type: String, required: true },
         password2: { type: String, required: true },
         address: { type: String, required: true },
-        age: { type: Number, required: true },
         phone: { type: Number, unique: true, required: true },
+        isAdmin: { type: Boolean, required: true },
     },
     {
         timestamps: true,
         __v: false,
     }
 );
-
-let instance = null;
 
 class DaoUserMongoose extends MongooseContainer {
     constructor() {
@@ -47,10 +45,6 @@ class DaoUserMongoose extends MongooseContainer {
             { $set: { products: obj } }
         );
     }
-    getInstance(){
-        if (!instance) instance = new DaoUserMongoose()
-        return instance
-        }
 }
 
 module.exports = {

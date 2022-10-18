@@ -10,40 +10,46 @@
     <body>
         <div class="container">
             <nav>
-                <h1>Welcome <%= user %></h1>
-                <a href="/main">CART</a>
-                <a href="/products">PRODUCTS</a>
-                <a href="/products/notebooks">NOTEBOOKS</a>
-                <a href="/products/computers">COMPUTRERS</a>
-                <a href="/chat">SUPPORT</a>
+                <h1 id="title">Welcome <%= username %></h1>
+                <a class="links" href="/main">CART</a>
+                <a class="links" href="/products">PRODUCTS</a>
+                <a class="links" href="/products/notebooks">NOTEBOOKS</a>
+                <a class="links" href="/products/computers">COMPUTRERS</a>
+                <a class="links" href="/chat">SUPPORT</a>
+                <a class="links" href="/chat/<%= username %>">PERSONAL MESSAGES</a>
                 <form action="/logout" method="POST">
                     <input type="submit" value="LOG OUT" />
                 </form>
             </nav>
             <div class="CartContainer">
-                <% if (userCart[0].products.length !== 0 ) { %> 
+                <% if (userCart[0].products.length !== 0 ) { %>
                 <%userCart[0].products.forEach((prod)=> { %>
                 <div class="cartCard">
                     <section><p><%= prod.title %></p></section>
                     <section class="descriptionCard">
                         <img
                             style="width: 150px; height: 100px"
-                            src="<%=prod.thumbnail%>"/>
+                            src="<%=prod.thumbnail%>"
+                        />
                         <p><%= prod.description %></p>
                         <section>
                             <p>$ <%= prod.price %></p>
                             <section>
-                                <button>-</button>
-                                <p>1</p>
-                                <button>+</button>
+                                <form action="/cart/<%= username %>/products/<%= prod.id %>/removeQty" method="post"><input type="submit" value="-"></form>
+                                <p><%= prod.qty %></p>
+                                <form action="/cart/<%= username %>/products/<%= prod.id %>/addQty" method="post"><input type="submit" value="+"></form>
+                                <form action="/cart/<%= username %>/products/<%= prod.id %>/deletefromCart" method="post"><input type="submit" value="x"></form>
                             </section>
                         </section>
                     </section>
                 </div>
                 <%})%>
-            </div>
+                <h2>TOTAL PRICE IS:  $<%= totalPrice %></h2>
+                <form action="/cart/purchase" method="POST">
+                    <input type="submit" value="COMPLETE PURCHASE">
+                </form>            </div>
             <% }else{%>
-            <div class="cart">EMPTY , PLEASE START BUYING</div>
+            <div class="cart warning">EMPTY , PLEASE START BUYING</div>
             <% }%>
         </div>
     </body>

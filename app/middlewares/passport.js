@@ -3,9 +3,9 @@ const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require("bcrypt");
 const { v4: uuid } = require("uuid");
 const { DaoUserMongoose } = require("../daos/daoUserMongoose");
+const logger = require("../helpers/log4js");
 
 const daoUsersMongoose = new DaoUserMongoose();
-
 
 passport.use(
     "register",
@@ -16,12 +16,14 @@ passport.use(
             const userFound = users.find((us) => us.username == username);
             const password2 = req.body.password2;
             if (password !== password2) {
-                    console.log({ message: "PASS NOT MATCH" })
-                    return done(null, false, { message: "PASS NOT MATCH" });
-                    
+                logger.warn({ message: "PASS NOT MATCH" });
+                return done(null, false, { message: "PASS NOT MATCH" });
             }
             if (userFound) {
-              return done(null, false, { message: "USERNAME ALREADY IN USE" });
+                logger.warn({ message: "USER ALREADY REGISTERED" });
+                return done(null, false, {
+                    message: "USERNAME ALREADY IN USE",
+                });
             } else {
                 const passHashed = bcrypt.hashSync(
                     password,
@@ -33,13 +35,13 @@ passport.use(
                 );
                 const newUser = {
                     id: uuid(),
+                    name: req.body.name,
                     username,
-                    email: req.body.email,
                     password: passHashed,
                     password2: passHashed2,
                     address: req.body.address,
-                    age: req.body.age,
                     phone: req.body.phone,
+                    isAdmin: false,
                 };
                 await daoUsersMongoose.save(newUser);
                 return done(null, newUser);
@@ -54,7 +56,9 @@ passport.use(
         const users = await daoUsersMongoose.getAll();
         const userFound = users.find((us) => us.username == username);
         if (!userFound || !bcrypt.compareSync(password, userFound.password)) {
-          return done(null, false, { message: "USERNAME OR PASSWORD NOT FOUND" });
+            return done(null, false, {
+                message: "USERNAME OR PASSWORD NOT FOUND",
+            });
         } else {
             return done(null, userFound);
         }

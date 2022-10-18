@@ -6,7 +6,6 @@
     text-decoration: none;
 }
 
-
 input {
     width: 25rem;
 }
@@ -188,4 +187,16 @@ textarea {
     -ms-border-radius: 5%;
     -o-border-radius: 5%;
     box-shadow: 5px 5px 10px black;
+}
+
+#message {
+    margin: 0 1rem;
+}
+
+.links{
+    margin-top: 1rem;
+    padding:.3rem;
+    border: 1px solid black;
+    font-weight: 1000;
+    background-color: rgba(20, 1, 128, 0.301);
 }

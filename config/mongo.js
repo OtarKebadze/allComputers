@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const logger = require("../app/helpers/log4js");
 const { DB_URI: url } = process.env;
 const mongooseOptions = {
     useNewUrlParser: true,
@@ -8,7 +9,7 @@ const mongooseOptions = {
 const dbConnect = async () => {
     await mongoose.connect(url, mongooseOptions, (error, res) => {
         if (!error) {
-            console.log(`
+            logger.info(`
       °°°°°°°°°°°°°°°°°°
      |                  |              
      |     CONNECTED    |
@@ -16,7 +17,7 @@ const dbConnect = async () => {
       °°°°°°°°°°°°°°°°°°
           `);
         } else {
-            console.log(`
+            logger.error(`
           °°°°°°°°°°°°°°°°°°°°°°°°°
          |                        |         
          |    FAILED COONECTION   |  
