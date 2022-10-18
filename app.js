@@ -1,4 +1,7 @@
-
+const path = require("path");
+require("dotenv").config({
+    path: path.resolve(__dirname, process.env.NODE_ENV + ".env"),
+});
 require("dotenv").config();
 const express = require("express");
 const app = express();
@@ -12,7 +15,7 @@ const MongoStore = require("connect-mongo");
 const coockieParser = require("cookie-parser");
 const session = require("express-session");
 const { PORT } = require("./config/index");
-const { DB_URI: dburl, COOKIE_SECRET: secret , SESSION_EXPIRES} = process.env;
+const { DB_URI: dburl, COOKIE_SECRET: secret, SESSION_EXPIRES } = process.env;
 const { dbConnect, mongooseOptions } = require("./config/mongo");
 const { RouterSession } = require("./app/routes/session");
 const { RouterProducts } = require("./app/routes/products");
