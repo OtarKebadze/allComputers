@@ -60,7 +60,7 @@ app.use(
         resave: true,
         saveUninitialized: true,
         cookie: {
-            maxAge: SESSION_EXPIRES,
+            maxAge: Number(SESSION_EXPIRES),
         },
     })
 );

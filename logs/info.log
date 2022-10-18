@@ -239,3 +239,64 @@
      |                  |                          
       °°°°°°°°°°°°°°°°°°
           
+[2022-10-18T20:18:36.040] [INFO] default - 
+  °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
+
+      Running in PORT: :5000      
+
+  °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
+  
+[2022-10-18T20:18:36.042] [INFO] default - CONNECTION TO PORT : 5000 WAS A SUCCESS
+[2022-10-18T20:18:38.164] [INFO] default - 
+      °°°°°°°°°°°°°°°°°°
+     |                  |              
+     |     CONNECTED    |
+     |                  |                          
+      °°°°°°°°°°°°°°°°°°
+          
+[2022-10-18T20:19:17.929] [INFO] default - 
+  °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
+
+      Running in PORT: :5000      
+
+  °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
+  
+[2022-10-18T20:19:17.932] [INFO] default - CONNECTION TO PORT : 5000 WAS A SUCCESS
+[2022-10-18T20:19:19.645] [INFO] default - 
+      °°°°°°°°°°°°°°°°°°
+     |                  |              
+     |     CONNECTED    |
+     |                  |                          
+      °°°°°°°°°°°°°°°°°°
+          
+[2022-10-18T20:19:53.177] [WARN] default - { message: 'USER ALREADY REGISTERED' }
+[2022-10-18T20:20:35.895] [INFO] default - 
+  °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
+
+      Running in PORT: :5000      
+
+  °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
+  
+[2022-10-18T20:20:35.897] [INFO] default - CONNECTION TO PORT : 5000 WAS A SUCCESS
+[2022-10-18T20:20:37.816] [INFO] default - 
+      °°°°°°°°°°°°°°°°°°
+     |                  |              
+     |     CONNECTED    |
+     |                  |                          
+      °°°°°°°°°°°°°°°°°°
+          
+[2022-10-18T20:21:10.533] [INFO] default - NUEVO USUARIO CONECTADO
+[2022-10-18T20:21:26.814] [INFO] default - NUEVO USUARIO CONECTADO
+[2022-10-18T20:21:42.696] [INFO] default - NUEVO USUARIO CONECTADO
+[2022-10-18T20:21:58.213] [INFO] default - NUEVO USUARIO CONECTADO
+[2022-10-18T20:22:18.989] [INFO] default - NUEVO USUARIO CONECTADO
+[2022-10-18T20:22:25.140] [INFO] default - NUEVO USUARIO CONECTADO
+[2022-10-18T20:22:37.421] [INFO] default - Anna@gmail.com PURCHASE WAS A SUCCESS
+[2022-10-18T20:23:21.759] [INFO] default - Connected as Admin
+[2022-10-18T20:24:19.881] [INFO] default - Connected as Admin
+[2022-10-18T20:24:20.256] [INFO] default - Added succesfully GAMER COMPUTER I7 with id: c94bc5d6-022a-404c-874c-7bf1c6ee60e2
+[2022-10-18T20:27:07.396] [INFO] default - OtarKebadze90@gmail.com PURCHASE WAS A SUCCESS
+[2022-10-18T20:27:57.667] [WARN] default - QUANTITY MUST BE HIGHER THAN 0
+[2022-10-18T20:27:57.668] [ERROR] default - PLEASE INTRODUCE QUANTITY AGAIN
+[2022-10-18T20:28:16.729] [INFO] default - OtarKebadze90@gmail.com PURCHASE WAS A SUCCESS
+[2022-10-18T20:28:23.201] [INFO] default - NUEVO USUARIO CONECTADO
